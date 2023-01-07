@@ -28,5 +28,11 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Likey> likeys = new ArrayList<>();
 
+    public void setMember(String id, String password, String nickname) {
+        this.id = id;
+        this.password = password;
+        this.nickname = nickname;
+    }
+
 
 }
