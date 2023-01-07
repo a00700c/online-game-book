@@ -9,9 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
@@ -24,14 +21,14 @@ public class MemberRepositoryTest {
     @Test
     public void 회원가입() {
         Member member = new Member();
-        member.setMember("hello", "1234", "it");
+        member.initMember("hello", "1234", "it");
         memberRepository.save(member);
     }
 
     @Test
     public void 검색() {
         Member member = new Member();
-        member.setMember("hello", "1234", "it");
+        member.initMember("hello", "1234", "it");
         memberRepository.save(member);
 
         Member findOne = memberRepository.findOneByNickname("it");

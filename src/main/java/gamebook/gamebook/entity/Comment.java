@@ -23,4 +23,9 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gb_num")
     private Gamebook gamebook;
+
+    public void initComment(String commentContent) {
+        this.commentContent = commentContent;
+        this.regDate = LocalDateTime.now();
+    }
 }

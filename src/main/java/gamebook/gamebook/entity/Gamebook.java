@@ -33,4 +33,10 @@ public class Gamebook {
     @OneToMany(mappedBy = "gamebook")
     private List<Likey> likeys = new ArrayList<>();
 
+    public void initGamebook(String title, String thumbnailPath) {
+        this.title = title;
+        this.thumbnailPath = thumbnailPath;
+        this.likeNum = 0L;
+        this.gbDate = LocalDateTime.now();
+    }
 }
