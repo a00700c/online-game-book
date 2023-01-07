@@ -1,9 +1,6 @@
 package gamebook.gamebook.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
@@ -18,4 +15,8 @@ public class Page {
     private Long next;
     private Long nextS;
     private Long nextT;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gb_num")
+    private Gamebook gamebook;
 }

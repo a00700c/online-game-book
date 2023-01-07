@@ -1,12 +1,11 @@
 package gamebook.gamebook.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,5 +20,17 @@ public class Gamebook {
     private LocalDateTime gbDate;
     private LocalDateTime chDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "gamebook")
+    private List<Page> pages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "gamebook")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "gamebook")
+    private List<Likey> likeys = new ArrayList<>();
 
 }
