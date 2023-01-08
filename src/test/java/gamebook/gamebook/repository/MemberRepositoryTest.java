@@ -31,7 +31,7 @@ public class MemberRepositoryTest {
         member.initMember("hello", "1234", "it");
         memberRepository.save(member);
 
-        Member findOne = memberRepository.findOneByNickname("it");
+        Member findOne = memberRepository.findOneByNickname("it").get();
         Assertions.assertThat(findOne.getId()).isEqualTo(member.getId());
         Assertions.assertThat(findOne.getPassword()).isEqualTo(member.getPassword());
 

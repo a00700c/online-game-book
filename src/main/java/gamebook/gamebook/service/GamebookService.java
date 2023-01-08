@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,13 @@ public class GamebookService {
     }
 
     @Transactional(readOnly = true)
+    public Gamebook findByGbNum(Long gbNum) {
+        return gamebookRepository.findById(gbNum).get();
+    }
+
+    @Transactional(readOnly = true)
     public List<Gamebook> findAllGamebook() {
-        return gamebookRepository.findAllOrderByGbNumDesc();
+        return gamebookRepository.findAllByOrderByGbNumDesc();
     }
 
     @Transactional(readOnly = true)
@@ -44,7 +50,7 @@ public class GamebookService {
     public List<Gamebook> findByNickname(String nickname) {
         Optional<Member> findMember = memberRepository.findOneByNickname(nickname);
         if (!findMember.isPresent()) {
-            return null;
+            return new ArrayList<>();
         }
         String id = findMember.get().getId();
         return gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
