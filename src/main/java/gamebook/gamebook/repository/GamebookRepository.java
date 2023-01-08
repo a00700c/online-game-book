@@ -8,4 +8,6 @@ import java.util.List;
 public interface GamebookRepository extends JpaRepository<Gamebook, Long> {
 
     List<Gamebook> findAllByTitle(String title);
+
+    List<Gamebook> findAllByMemberId(String id);
 }

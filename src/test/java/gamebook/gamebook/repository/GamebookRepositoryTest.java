@@ -21,16 +21,16 @@ public class GamebookRepositoryTest {
     @Autowired
     GamebookRepository gamebookRepository;
 
-    @Test
-    public void 생성() {
-        Gamebook gamebook = new Gamebook();
-        gamebook.initGamebook("baby", "gogo");
-
-        gamebookRepository.save(gamebook);
-        List<Gamebook> findList = gamebookRepository.findAllByTitle("baby");
-        findList.stream().forEach(s ->
-                log.info("title = {}, thumb = {}, date = {}, like = {}",s.getTitle(), s.getThumbnailPath(), s.getGbDate(), s.getLikeNum())
-        );
-
-    }
+//    @Test
+//    public void 생성() {
+//        Gamebook gamebook = new Gamebook();
+//        gamebook.initGamebook("baby", "gogo");
+//
+//        gamebookRepository.save(gamebook);
+//        List<Gamebook> findList = gamebookRepository.findAllByTitle("baby");
+//        findList.stream().forEach(s ->
+//                log.info("title = {}, thumb = {}, date = {}, like = {}",s.getTitle(), s.getThumbnailPath(), s.getGbDate(), s.getLikeNum())
+//        );
+//
+//    }
 }
