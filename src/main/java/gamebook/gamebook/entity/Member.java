@@ -34,5 +34,9 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 
 }
