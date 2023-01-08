@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,21 @@ public class MemberService {
         if (findByNickname.isPresent()) {
             throw new IllegalStateException("이미 동일한 닉네임이 존재합니다");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Member findOneById(String id) {
+        Optional<Member> findMember = memberRepository.findById(id);
+        if (!findMember.isPresent()) {
+            throw new IllegalStateException("찾으시는 회원이 없습니다.");
+        }
+        Member member = findMember.get();
+        return member;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     public void updateNickname(String id, String nickname) {
