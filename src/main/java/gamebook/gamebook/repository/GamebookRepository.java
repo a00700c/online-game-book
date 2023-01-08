@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface GamebookRepository extends JpaRepository<Gamebook, Long> {
 
-    List<Gamebook> findAllByTitle(String title);
+    List<Gamebook> findAllByTitleOrderByGbNumDesc(String title);
 
-    List<Gamebook> findAllByMemberId(String id);
+    List<Gamebook> findAllByMemberIdOrderByGbNumDesc(String id);
+
+    List<Gamebook> findAllOrderByGbNumDesc();
 }
