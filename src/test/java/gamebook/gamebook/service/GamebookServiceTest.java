@@ -33,7 +33,7 @@ public class GamebookServiceTest {
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Gamebook gamebook = gamebookService.findByGbNum(findNum);
         List<Gamebook> findByTitle = gamebookService.findByTitle(gamebook.getTitle());
-        findByTitle.stream().forEach(s ->
+        findByTitle.forEach(s ->
                 log.info("title = {}, thumbnail = {}, likeNum = {}, gbDate = {}, isPublic = {}", s.getTitle(), s.getThumbnailPath(), s.getLikeNum(), s.getGbDate(), s.getIsPublic()));
     }
 
@@ -53,7 +53,7 @@ public class GamebookServiceTest {
         gamebookService.makeNewGamebook("gb4", "ddd", "member2");
 
         List<Gamebook> allGamebook = gamebookService.findAllGamebook();
-        allGamebook.stream().forEach(s ->
+        allGamebook.forEach(s ->
                 log.info("title = {}, gbNum = {}", s.getTitle(), s.getGbNum()));
     }
 
@@ -73,7 +73,7 @@ public class GamebookServiceTest {
         gamebookService.makeNewGamebook("gb4", "ddd", "member2");
 
         List<Gamebook> allGamebook = gamebookService.findByNickname("ss");
-        allGamebook.stream().forEach(s ->
+        allGamebook.forEach(s ->
                 log.info("title = {}, gbNum = {}", s.getTitle(), s.getGbNum()));
     }
 }

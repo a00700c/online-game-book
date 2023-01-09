@@ -36,11 +36,10 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findOneById(String id) {
         Optional<Member> findMember = memberRepository.findById(id);
-        if (!findMember.isPresent()) {
+        if (findMember.isEmpty()) {
             throw new IllegalStateException("찾으시는 회원이 없습니다.");
         }
-        Member member = findMember.get();
-        return member;
+        return findMember.get();
     }
 
     @Transactional(readOnly = true)

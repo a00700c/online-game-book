@@ -49,7 +49,7 @@ public class GamebookService {
     @Transactional(readOnly = true)
     public List<Gamebook> findByNickname(String nickname) {
         Optional<Member> findMember = memberRepository.findOneByNickname(nickname);
-        if (!findMember.isPresent()) {
+        if (findMember.isEmpty()) {
             return new ArrayList<>();
         }
         String id = findMember.get().getId();
