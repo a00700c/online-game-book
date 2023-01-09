@@ -42,6 +42,37 @@ public class Gamebook {
         member.getGamebooks().add(this);
     }
 
+    public Long likeUp() {
+        this.likeNum += 1;
+        return likeNum;
+    }
+
+    public Long likeDown() {
+        this.likeNum -= 1;
+        return likeNum;
+    }
+
+    public LocalDateTime changeDate() {
+        this.chDate = LocalDateTime.now();
+        return chDate;
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
+    }
+
+    public void changeToPublic() {
+        this.isPublic = 1L;
+    }
+
+    public void changeToPrivate() {
+        this.isPublic = 0L;
+    }
+
     public static Gamebook createGamebook(Member member) {
         Gamebook gamebook = new Gamebook();
         gamebook.setMember(member);
