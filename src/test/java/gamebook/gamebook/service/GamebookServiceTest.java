@@ -2,8 +2,6 @@ package gamebook.gamebook.service;
 
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
-import gamebook.gamebook.repository.GamebookRepository;
-import gamebook.gamebook.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,9 +17,7 @@ import java.util.List;
 @Slf4j
 public class GamebookServiceTest {
 
-    @Autowired MemberRepository memberRepository;
     @Autowired MemberService memberService;
-    @Autowired GamebookRepository gamebookRepository;
     @Autowired GamebookService gamebookService;
 
     @Test

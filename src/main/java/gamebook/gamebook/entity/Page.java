@@ -47,7 +47,7 @@ public class Page {
         this.pageNum = pageNum;
     }
 
-    public void plusFirstChoice(String firstContent, Long nextF) {
+    public void setFirstChoice(String firstContent, Long nextF) {
         this.firstContent = firstContent;
         this.nextF = nextF;
     }
@@ -57,7 +57,7 @@ public class Page {
         this.nextF = null;
     }
 
-    public void plusSecondChoice(String secondContent, Long nextS) {
+    public void setSecondChoice(String secondContent, Long nextS) {
         this.secondContent = secondContent;
         this.nextS = nextS;
     }
@@ -67,7 +67,7 @@ public class Page {
         this.nextS = null;
     }
 
-    public void plusThirdChoice(String thirdContent, Long nextT) {
+    public void setThirdChoice(String thirdContent, Long nextT) {
         this.thirdContent = thirdContent;
         this.nextT = nextT;
     }

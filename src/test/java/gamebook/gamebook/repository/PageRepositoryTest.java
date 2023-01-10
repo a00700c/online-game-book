@@ -51,6 +51,7 @@ public class PageRepositoryTest {
         List<Page> findPages = pageRepository.findAllByGamebookGbNumOrderByPageNumAsc(1L);
         findPages.forEach(s ->
                 log.info("page id = {}, gb_num = {}", s.getPageId(), s.getGamebook().getGbNum()));
-
+        page.setFirstChoice("hi, I'm you.", 3L);
+        page.deleteFirstChoice();
     }
 }
