@@ -31,6 +31,34 @@ public class GamebookService {
         return gamebook.getGbNum();
     }
 
+    public Long likeUp(Long gbNum) {
+        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+        return gamebook.likeUp();
+    }
+
+    public Long likeDown(Long gbNum) {
+        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+        return gamebook.likeDown();
+    }
+
+    public void changeToPublic(Long gbNum) {
+        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+        gamebook.changeToPublic();
+    }
+
+    public void changeToPrivate(Long gbNum) {
+        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+        gamebook.changeToPrivate();
+    }
+
+    public void updateGamebook(Long gbNum, String title, String thumbnailPath) {
+        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+        gamebook.changeTitle(title);
+        gamebook.changeThumbnailPath(thumbnailPath);
+        gamebook.changeDate();
+    }
+
+
     @Transactional(readOnly = true)
     public Gamebook findByGbNum(Long gbNum) {
         return gamebookRepository.findById(gbNum).get();

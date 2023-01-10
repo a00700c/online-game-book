@@ -72,4 +72,23 @@ public class GamebookServiceTest {
         allGamebook.forEach(s ->
                 log.info("title = {}, gbNum = {}", s.getTitle(), s.getGbNum()));
     }
+
+    @Test
+    public void functionTest() {
+        Member member = new Member();
+        member.initMember("member1", "1234", "guy");
+        memberService.join(member);
+
+        Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
+        Long findNum2 = gamebookService.makeNewGamebook("gb2", "bbb", "member1");
+        Long findNum3 = gamebookService.makeNewGamebook("gb3", "ccc", "member1");
+
+        gamebookService.likeUp(findNum);
+        gamebookService.likeUp(findNum);
+        gamebookService.likeUp(findNum2);
+        gamebookService.likeDown(findNum);
+        gamebookService.changeToPublic(findNum);
+        gamebookService.updateGamebook(findNum2, "chTitle", "chPath");
+        gamebookService.changeToPrivate(findNum);
+    }
 }
