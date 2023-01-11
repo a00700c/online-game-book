@@ -28,4 +28,25 @@ public class Comment {
         this.commentContent = commentContent;
         this.regDate = LocalDateTime.now();
     }
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getComments().add(this);
+    }
+
+    public void setGamebook(Gamebook gamebook) {
+        this.gamebook = gamebook;
+        gamebook.getComments().add(this);
+    }
+
+    public static Comment createComment(Member member, Gamebook gamebook, String commentContent) {
+        Comment comment = new Comment();
+        comment.setMember(member);
+        comment.setGamebook(gamebook);
+        comment.initComment(commentContent);
+        return comment;
+    }
 }
+
+
+
