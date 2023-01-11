@@ -31,15 +31,7 @@ public class GamebookService {
         return gamebook.getGbNum();
     }
 
-    public Long likeUp(Long gbNum) {
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
-        return gamebook.likeUp();
-    }
 
-    public Long likeDown(Long gbNum) {
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
-        return gamebook.likeDown();
-    }
 
     public void changeToPublic(Long gbNum) {
         Gamebook gamebook = gamebookRepository.findById(gbNum).get();

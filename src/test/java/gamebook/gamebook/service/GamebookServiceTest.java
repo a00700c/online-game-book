@@ -83,10 +83,6 @@ public class GamebookServiceTest {
         Long findNum2 = gamebookService.makeNewGamebook("gb2", "bbb", "member1");
         Long findNum3 = gamebookService.makeNewGamebook("gb3", "ccc", "member1");
 
-        gamebookService.likeUp(findNum);
-        gamebookService.likeUp(findNum);
-        gamebookService.likeUp(findNum2);
-        gamebookService.likeDown(findNum);
         gamebookService.changeToPublic(findNum);
         gamebookService.updateGamebook(findNum2, "chTitle", "chPath");
         gamebookService.changeToPrivate(findNum);
