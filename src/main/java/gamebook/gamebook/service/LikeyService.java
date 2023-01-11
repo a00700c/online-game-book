@@ -37,6 +37,7 @@ public class LikeyService {
         return gamebook.likeDown();
     }
 
+    @Transactional(readOnly = true)
     public List<Gamebook> findUserLike(String memberId) {
         List<Likey> findLikeyList = likeyRepository.findAllByMemberIdOrderByIdDesc(memberId);
         List<Gamebook> gamebookList = new ArrayList<>();

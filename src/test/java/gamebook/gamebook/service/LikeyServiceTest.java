@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class LikeyServiceTest {
     @Autowired LikeyService likeyService;
 
     @Test
+    @Transactional
     public void likeyTest() {
         Member member = new Member();
         member.initMember("member1", "1234", "guy");
