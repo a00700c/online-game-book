@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface LikeyRepository extends JpaRepository<Likey, Long> {
 
-    List<Likey> findAllByMemberIdOrderByIdDesc(Long memberId);
+    List<Likey> findAllByMemberIdOrderByIdDesc(String memberId);
+
+    Likey findByMemberIdAndGamebookGbNum(String memberId, Long gbNum);
 }
