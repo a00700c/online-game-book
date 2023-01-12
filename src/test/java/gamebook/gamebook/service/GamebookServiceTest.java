@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,8 @@ public class GamebookServiceTest {
 
     @Test
     public void makeNewGamebookTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Gamebook gamebook = gamebookService.findByGbNum(findNum);
@@ -35,13 +35,11 @@ public class GamebookServiceTest {
 
     @Test
     public void findAllTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
-        Member member2 = new Member();
-        member2.initMember("member2", "1234", "psy");
-        memberService.join(member2);
+        MemberJoinRequestDto memberJoinRequestDto2 = new MemberJoinRequestDto("member2", "1234", "psy");
+        memberService.join(memberJoinRequestDto2);
 
         gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         gamebookService.makeNewGamebook("gb2", "bbb", "member1");
@@ -55,13 +53,11 @@ public class GamebookServiceTest {
 
     @Test
     public void findByNicknameTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "ss");
+        memberService.join(memberJoinRequestDto);
 
-        Member member2 = new Member();
-        member2.initMember("member2", "1234", "psy");
-        memberService.join(member2);
+        MemberJoinRequestDto memberJoinRequestDto2 = new MemberJoinRequestDto("member2", "1234", "psy");
+        memberService.join(memberJoinRequestDto2);
 
         gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         gamebookService.makeNewGamebook("gb2", "bbb", "member1");
@@ -75,9 +71,8 @@ public class GamebookServiceTest {
 
     @Test
     public void functionTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Long findNum2 = gamebookService.makeNewGamebook("gb2", "bbb", "member1");

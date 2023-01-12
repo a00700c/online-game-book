@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
 import gamebook.gamebook.repository.MemberRepository;
@@ -23,18 +24,16 @@ public class MemberServiceTest {
 
     @Test
     public void memberJoinTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
     }
 
     @Test
     public void memberDeleteTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
         Member member1 = memberService.findOneById("member1");
-        assertThat(member1.getNickname()).isEqualTo(member.getNickname());
+        assertThat(member1.getNickname()).isEqualTo(memberJoinRequestDto.getNickname());
 
         memberService.deleteMember("member1");
         assertThrows(IllegalStateException.class, () -> memberService.findOneById("member1"));
@@ -42,25 +41,22 @@ public class MemberServiceTest {
 
     @Test
     public void memberDuplicateTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
-        Member member2 = new Member();
-        member2.initMember("member1", "1234", "no");
-        assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+        MemberJoinRequestDto memberJoinRequestDto2 = new MemberJoinRequestDto("member1", "1234", "no");
 
-        Member member3 = new Member();
-        member3.initMember("member2", "1234", "guy");
-        assertThrows(IllegalStateException.class, () -> memberService.join(member3));
+        assertThrows(IllegalStateException.class, () -> memberService.join(memberJoinRequestDto2));
+
+        MemberJoinRequestDto memberJoinRequestDto3 = new MemberJoinRequestDto("member2", "1234", "guy");
+        assertThrows(IllegalStateException.class, () -> memberService.join(memberJoinRequestDto3));
 
     }
 
     @Test
     public void updateNicknameTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
         memberService.updateNickname("member1", "change");
         Member findMember = memberService.findOneById("member1");

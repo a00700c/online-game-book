@@ -1,5 +1,6 @@
 package gamebook.gamebook.repository;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.entity.Page;
@@ -29,13 +30,11 @@ public class PageRepositoryTest {
     @Test
     @Rollback(value = false)
     public void pageRepositoryTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
-        Member member2 = new Member();
-        member2.initMember("member2", "1234", "auy");
-        memberService.join(member2);
+        MemberJoinRequestDto memberJoinRequestDto2 = new MemberJoinRequestDto("member2", "1234", "auy");
+        memberService.join(memberJoinRequestDto2);
 
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Long findNum2 = gamebookService.makeNewGamebook("gb2", "aaa", "member2");

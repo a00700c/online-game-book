@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +25,11 @@ public class LikeyServiceTest {
     @Test
     @Transactional
     public void likeyTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        String memberId = memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        String memberId = memberService.join(memberJoinRequestDto);
 
-        Member member2 = new Member();
-        member2.initMember("member2", "1234", "hi");
-        String memberId2 = memberService.join(member2);
+        MemberJoinRequestDto memberJoinRequestDto2 = new MemberJoinRequestDto("member2", "1234", "hi");
+        String memberId2 = memberService.join(memberJoinRequestDto2);
 
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Long findNum2 = gamebookService.makeNewGamebook("gb2", "bbb", "member1");

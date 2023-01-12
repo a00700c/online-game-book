@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,8 @@ public class PageServiceTest {
 
     @Test
     public void makeNewPageTest() {
-        Member member = new Member();
-        member.initMember("member1", "1234", "guy");
-        memberService.join(member);
+        MemberJoinRequestDto memberJoinRequestDto = new MemberJoinRequestDto("member1", "1234", "guy");
+        memberService.join(memberJoinRequestDto);
 
         Long findNum = gamebookService.makeNewGamebook("gb1", "aaa", "member1");
         Long findNum2 = gamebookService.makeNewGamebook("gb2", "bbb", "member1");

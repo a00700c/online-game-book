@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,12 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public String join(Member member) {
+    public String join(MemberJoinRequestDto memberJoinRequestDto) {
+        Member member = new Member();
+        member.initMember(memberJoinRequestDto.getId(), memberJoinRequestDto.getPassword(), memberJoinRequestDto.getNickname());
         validateDuplicateMember(member);
         memberRepository.save(member);
-        return member.getId();
+        return memberJoinRequestDto.getId();
     }
 
     private void validateDuplicateMember(Member member) {
