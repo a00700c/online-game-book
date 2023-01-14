@@ -20,17 +20,21 @@ public class MemberService {
     public String join(MemberJoinRequestDto memberJoinRequestDto) {
         Member member = new Member();
         member.initMember(memberJoinRequestDto.getId(), memberJoinRequestDto.getPassword(), memberJoinRequestDto.getNickname());
-        validateDuplicateMember(member);
         memberRepository.save(member);
         return memberJoinRequestDto.getId();
     }
 
-    private void validateDuplicateMember(Member member) {
-        Optional<Member> findById = memberRepository.findById(member.getId());
-        Optional<Member> findByNickname = memberRepository.findOneByNickname(member.getNickname());
+    @Transactional(readOnly = true)
+    public void validateDuplicateId(String id) {
+        Optional<Member> findById = memberRepository.findById(id);
         if (findById.isPresent()) {
             throw new IllegalStateException("이미 id가 존재합니다.");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public void validateDuplicateNickname(String nickname) {
+        Optional<Member> findByNickname = memberRepository.findOneByNickname(nickname);
         if (findByNickname.isPresent()) {
             throw new IllegalStateException("이미 동일한 닉네임이 존재합니다");
         }
