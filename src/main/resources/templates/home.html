@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <div class="jumbotron">
+        <h1>온라인 게임북 사이트</h1>
+        <p>
+            <a class="btn btn-lg btn-primary" href="/members/new">회원 가입</a>
+            <a class="btn btn-lg btn-primary" href="/login">로그인</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/ranking">랭킹 순 조회</a>
+            <a class="btn btn-lg btn-info" href="/making/new">게임북 제작</a>
+        </p>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
