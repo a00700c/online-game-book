@@ -1,5 +1,5 @@
 package gamebook.gamebook.web;
 
 public class SessionConst {
-    public static final String LOGIN_MEMBER = "loginMember";
+    public static final String MEMBER_ID = "memberId";
 }

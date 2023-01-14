@@ -1,9 +1,15 @@
 package gamebook.gamebook.controller;
 
 import gamebook.gamebook.dto.MemberJoinRequestDto;
+import gamebook.gamebook.dto.MemberLoginRequestDto;
+import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.service.MemberService;
+import gamebook.gamebook.web.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -44,6 +51,43 @@ public class MemberController {
 
         memberService.join(memberJoinRequestDto);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginForm(Model model) {
+        model.addAttribute("memberLoginRequestDto", new MemberJoinRequestDto());
+        return "members/loginForm";
+    }
+
+    @PostMapping("/login")
+    public String login(@Valid MemberLoginRequestDto memberLoginRequestDto, BindingResult bindingResult, HttpServletRequest request) {
+
+        try {
+            String findPassword = memberService.findPasswordById(memberLoginRequestDto.getId()).getPassword();
+            if (!memberLoginRequestDto.getPassword().equals(findPassword)) {
+                bindingResult.addError(new FieldError("memberLoginRequestDto", "password", "id와 패스워드가 일치하지 않습니다"));
+            }
+        } catch (IllegalStateException e) {
+            bindingResult.addError(new FieldError("memberLoginRequestDto", "id", "ID가 존재하지 않습니다"));
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "members/loginForm";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.MEMBER_ID, memberLoginRequestDto.getId());
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
     }
 }
