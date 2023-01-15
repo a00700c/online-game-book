@@ -21,3 +21,6 @@ server:
 logging:
   level:
     org.hibernate.SQL: debug
+
+file:
+  dir: F:/ogb/picture/

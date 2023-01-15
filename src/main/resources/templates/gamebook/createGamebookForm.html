@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <form role="form" action="/making/new" enctype="multipart/form-data" th:object="${gamebookForm}" method="post">
+        <div class="form-group">
+            <p>썸네일 사진을 등록하세요</p><br>
+            <input type="file" th:field="*{file}">
+            <label th:for="title">제목을 입력하세요</label>
+            <input type="text" th:field="*{title}" class="form-control" placeholder="게임북 제목을 입력하세요"
+                   th:class="${#fields.hasErrors('title')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect date</p>
+        </div>
+        <button type="submit" class="btn btn-primary">새 게임북 만들기</button>
+    </form>
+    <br/>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
+
+</body>
+</html>

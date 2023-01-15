@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.GamebookCreateDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -20,12 +21,12 @@ public class GamebookService {
     private final MemberRepository memberRepository;
     private final GamebookRepository gamebookRepository;
 
-    public Long makeNewGamebook(String title, String thumbnailPath, String memberId) {
+    public Long makeNewGamebook(GamebookCreateDto gamebookCreateDto) {
 
-        Member member = memberRepository.findById(memberId).get();
+        Member member = memberRepository.findById(gamebookCreateDto.getMemberId()).get();
 
         Gamebook gamebook = Gamebook.createGamebook(member);
-        gamebook.initGamebook(title, thumbnailPath);
+        gamebook.initGamebook(gamebookCreateDto.getTitle(), gamebookCreateDto.getThumbnailPath());
 
         gamebookRepository.save(gamebook);
         return gamebook.getGbNum();
