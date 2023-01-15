@@ -79,7 +79,7 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.MEMBER_ID, memberLoginRequestDto.getId());
 
-        return "redirect:/";
+        return "redirect:/loginHome";
     }
 
     @PostMapping("/logout")
