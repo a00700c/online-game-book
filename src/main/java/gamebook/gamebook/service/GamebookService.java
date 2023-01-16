@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.GamebookCreateDto;
+import gamebook.gamebook.dto.GamebookReturnDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -21,7 +22,7 @@ public class GamebookService {
     private final MemberRepository memberRepository;
     private final GamebookRepository gamebookRepository;
 
-    public Long makeNewGamebook(GamebookCreateDto gamebookCreateDto) {
+    public GamebookReturnDto makeNewGamebook(GamebookCreateDto gamebookCreateDto) {
 
         Member member = memberRepository.findById(gamebookCreateDto.getMemberId()).get();
 
@@ -29,7 +30,7 @@ public class GamebookService {
         gamebook.initGamebook(gamebookCreateDto.getTitle(), gamebookCreateDto.getThumbnailPath());
 
         gamebookRepository.save(gamebook);
-        return gamebook.getGbNum();
+        return new GamebookReturnDto(gamebook.getGbNum());
     }
 
 

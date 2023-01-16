@@ -1,8 +1,6 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.GamebookCreateDto;
-import gamebook.gamebook.dto.GamebookForm;
-import gamebook.gamebook.dto.PageListDto;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;
@@ -51,7 +49,7 @@ public class GamebookController {
         String filePath = fileStore.storeFile(file);
         GamebookCreateDto gamebookCreateDto = new GamebookCreateDto(form.getTitle(), filePath, loginId);
 
-        Long gbNum = gamebookService.makeNewGamebook(gamebookCreateDto);
+        Long gbNum = gamebookService.makeNewGamebook(gamebookCreateDto).getGbNum();
         redirectAttributes.addAttribute("gbNum", gbNum);
 
         return "redirect:/{gbNum}/pageList";
@@ -61,7 +59,16 @@ public class GamebookController {
     @GetMapping("/{gbNum}/pageList")
     public String showPageList(@PathVariable Long gbNum, Model model) {
         List<PageListDto> findPages = pageService.showAllPages(gbNum);
-        model.addAttribute(findPages);
+        model.addAttribute("findPages", findPages);
         return "gamebook/pageList";
     }
+
+    @GetMapping("/{gbNum}/newPage")
+    public String makeNewPage(@PathVariable Long gbNum, Model model) {
+        newPageReturnDto pageReturnDto = pageService.makeNewPage(gbNum);
+        model.addAttribute("pageId", pageReturnDto.getPageId());
+        model.addAttribute("pageForm", new newPageForm(pageReturnDto.getPageNum()));
+        return "gamebook/newPageForm";
+    }
+
 }

@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.PageListDto;
+import gamebook.gamebook.dto.newPageReturnDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Page;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -20,7 +21,7 @@ public class PageService {
     private final GamebookRepository gamebookRepository;
     private final PageRepository pageRepository;
 
-    public Long makeNewPage(Long gbNum) {
+    public newPageReturnDto makeNewPage(Long gbNum) {
 
         Gamebook gamebook = gamebookRepository.findById(gbNum).get();
         Page page = Page.createPage(gamebook);
@@ -28,7 +29,7 @@ public class PageService {
         page.setPageNum(pageNum);
 
         pageRepository.save(page);
-        return page.getPageId();
+        return new newPageReturnDto(page.getPageId(), pageNum);
     }
 
     public List<PageListDto> showAllPages(Long gbNum) {
