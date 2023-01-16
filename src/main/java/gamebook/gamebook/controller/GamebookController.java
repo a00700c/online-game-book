@@ -2,33 +2,34 @@ package gamebook.gamebook.controller;
 
 import gamebook.gamebook.dto.GamebookCreateDto;
 import gamebook.gamebook.dto.GamebookForm;
+import gamebook.gamebook.dto.PageListDto;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.GamebookService;
+import gamebook.gamebook.service.PageService;
 import gamebook.gamebook.web.SessionConst;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class GamebookController {
 
-    @Value("${file.dir}")
-    private String fileDir;
-
     private final GamebookService gamebookService;
+    private final PageService pageService;
     private final FileStore fileStore;
 
     @GetMapping("/making/new")
@@ -53,7 +54,14 @@ public class GamebookController {
         Long gbNum = gamebookService.makeNewGamebook(gamebookCreateDto);
         redirectAttributes.addAttribute("gbNum", gbNum);
 
-        return "redirect:/gamebook/{gbNum}";
+        return "redirect:/{gbNum}/pageList";
 
+    }
+
+    @GetMapping("/{gbNum}/pageList")
+    public String showPageList(@PathVariable Long gbNum, Model model) {
+        List<PageListDto> findPages = pageService.showAllPages(gbNum);
+        model.addAttribute(findPages);
+        return "gamebook/pageList";
     }
 }
