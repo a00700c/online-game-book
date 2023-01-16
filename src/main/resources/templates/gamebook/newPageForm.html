@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <form role="form" th:action="@{/{gbNum}/{pageId}/{pageNum}/newPage(gbNum=${gbNum}, pageId=${pageId}, pageNum=${pageNum})}" enctype="multipart/form-data" th:object="${pageForm}" method="post">
+        <div class="form-group">
+            <p>썸네일 사진을 등록하세요</p><br>
+            <input type="file" th:field="*{file}">
+            <label th:for="content">내용을 입력하세요</label>
+            <input type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요"
+                   th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
+        </div>
+        <button type="submit" class="btn btn-primary">페이지 저장하기</button>
+    </form>
+    <br/>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
+
+</body>
+</html>

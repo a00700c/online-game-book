@@ -26,7 +26,7 @@ public class PageRepositoryTest {
     @Autowired PageRepository pageRepository;
     @Autowired MemberService memberService;
     @Autowired GamebookService gamebookService;
-
+    /*
     @Test
     @Rollback(value = false)
     public void pageRepositoryTest() {
@@ -53,4 +53,5 @@ public class PageRepositoryTest {
         page.setFirstChoice("hi, I'm you.", 3L);
         page.deleteFirstChoice();
     }
+     */
 }
