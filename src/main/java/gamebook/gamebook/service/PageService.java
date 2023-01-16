@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.PageListDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Page;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -7,6 +8,9 @@ import gamebook.gamebook.repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +29,13 @@ public class PageService {
 
         pageRepository.save(page);
         return page.getPageId();
+    }
+
+    public List<PageListDto> showAllPages(Long gbNum) {
+        List<Page> findPages = pageRepository.findAllByGamebookGbNumOrderByPageNumAsc(gbNum);
+        return findPages.stream()
+                .map(o -> new PageListDto(o.getPicPath(), o.getPageNum()))
+                .collect(Collectors.toList());
     }
 
     public void updatePicPath(Long pageId, String picPath) {
