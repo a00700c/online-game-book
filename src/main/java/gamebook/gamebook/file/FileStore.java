@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -18,15 +20,18 @@ public class FileStore {
         if (file.isEmpty()) {
             return null;
         }
-        String storeFileName = createStoreFileName(file);
-        file.transferTo(new File(storeFileName));
-        return storeFileName;
+        List<String> fileNames = createStoreFileName(file);
+        file.transferTo(new File(fileNames.get(0)));
+        return fileNames.get(1);
     }
 
-    private String createStoreFileName(MultipartFile file) {
+    private List<String> createStoreFileName(MultipartFile file) {
+        List<String> fileNames = new ArrayList<>();
         String uuid = UUID.randomUUID().toString();
         String ext = extractExt(file.getOriginalFilename());
-        return fileDir + uuid + "." + ext;
+        fileNames.add(fileDir + uuid + "." + ext);
+        fileNames.add(uuid + "." + ext);
+        return fileNames;
     }
 
     private String extractExt(String fileName) {

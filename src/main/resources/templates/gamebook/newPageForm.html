@@ -24,6 +24,8 @@
     </form>
     <input type="button" id="aButton" class="btn btn-primary" value="전송" onclick="savePicAndCon()">
     <br/>
+    <a class="btn btn-lg btn-primary" th:href="@{/{gbNum}/list(gbNum=${gbNum})}">페이지 목록 보기</a>
+
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 
