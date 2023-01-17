@@ -52,35 +52,36 @@ public class GamebookController {
         Long gbNum = gamebookService.makeNewGamebook(gamebookCreateDto).getGbNum();
         redirectAttributes.addAttribute("gbNum", gbNum);
 
-        return "redirect:/{gbNum}/pageList";
+        return "redirect:/{gbNum}/list";
 
     }
 
-    @GetMapping("/{gbNum}/pageList")
+    @GetMapping("/{gbNum}/list")
     public String showPageList(@PathVariable Long gbNum, Model model) {
         List<PageListDto> findPages = pageService.showAllPages(gbNum);
         model.addAttribute("findPages", findPages);
         return "gamebook/pageList";
     }
 
-    @PostMapping("/{gbNum}/newPage")
+    @PostMapping("/{gbNum}/new")
     public String makeNewPage(@PathVariable Long gbNum, RedirectAttributes redirectAttributes) {
         newPageReturnDto pageReturnDto = pageService.makeNewPage(gbNum);
         redirectAttributes.addAttribute("pageId", pageReturnDto.getPageId());
         redirectAttributes.addAttribute("gbNum", gbNum);
         redirectAttributes.addAttribute("pageNum", pageReturnDto.getPageNum());
-        return "redirect:/{gbNum}/{pageId}/{pageNum}/newPage";
+        return "redirect:/{gbNum}/{pageId}/{pageNum}/new";
     }
 
-    @GetMapping("/{gbNum}/{pageId}/{pageNum}/newPage")
+    @GetMapping("/{gbNum}/{pageId}/{pageNum}/new")
     public String newPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
         model.addAttribute("pageForm", new newPageForm(pageNum));
+        model.addAttribute("pageId", pageId);
         return "gamebook/newPageForm";
     }
 
-    @PostMapping("/{gbNum}/{pageId}/{pageNum}/newPage")
+    @PostMapping("/{gbNum}/{pageId}/{pageNum}/new")
     public String updatePage(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum) {
         // to be updated
-        return "redirect:/{gbNum}/pageList";
+        return "redirect:/{gbNum}/list";
     }
 }

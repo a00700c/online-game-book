@@ -11,20 +11,45 @@
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
 
-    <form role="form" th:action="@{/{gbNum}/{pageId}/{pageNum}/newPage(gbNum=${gbNum}, pageId=${pageId}, pageNum=${pageNum})}" enctype="multipart/form-data" th:object="${pageForm}" method="post">
+    <form id="picForm" role="form" enctype="multipart/form-data" th:object="${pageForm}">
         <div class="form-group">
             <p>썸네일 사진을 등록하세요</p><br>
-            <input type="file" th:field="*{file}">
+            <input id="picture" name="picture" type="file" th:field="*{file}"><br>
             <label th:for="content">내용을 입력하세요</label>
-            <input type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요"
+            <input id="content" name="content" type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요"
                    th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
+            <input type="hidden" name="pageId" th:value="${pageId}">
         </div>
-        <button type="submit" class="btn btn-primary">페이지 저장하기</button>
     </form>
+    <input type="button" id="aButton" class="btn btn-primary" value="전송" onclick="savePicAndCon()">
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 
 </body>
+
+<script>
+    function savePicAndCon() {
+        let form = $("form")[0];
+        let formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/page/update-pic-con",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (result) {
+                console.log(result);
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+</script>
+
 </html>

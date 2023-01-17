@@ -15,7 +15,7 @@
         <img th:src="${page.picPath}">
         <text th:text="${page.pageNum}"></text>
     </div>
-    <form method="post" th:action="@{/{gbNum}/newPage(gbNum=${gbNum})}"><button type="submit" class="btn btn-lg btn-primary">새 페이지 만들기</button></form>
+    <form method="post" th:action="@{/{gbNum}/new(gbNum=${gbNum})}"><button type="submit" class="btn btn-lg btn-primary">새 페이지 만들기</button></form>
 
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>

@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.PageListDto;
+import gamebook.gamebook.dto.PagePicContentDto;
 import gamebook.gamebook.dto.newPageReturnDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Page;
@@ -37,6 +38,12 @@ public class PageService {
         return findPages.stream()
                 .map(o -> new PageListDto(o.getPicPath(), o.getPageNum()))
                 .collect(Collectors.toList());
+    }
+
+    public void updatePicPathAndContent(PagePicContentDto pagePicContentDto) {
+        Page page = pageRepository.findById(pagePicContentDto.getPageId()).get();
+        page.setPicPath(pagePicContentDto.getPicPath());
+        page.setContent(pagePicContentDto.getContent());
     }
 
     public void updatePicPath(Long pageId, String picPath) {
