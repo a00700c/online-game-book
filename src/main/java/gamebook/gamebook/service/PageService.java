@@ -1,9 +1,6 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.PageInfoDto;
-import gamebook.gamebook.dto.PageListDto;
-import gamebook.gamebook.dto.PagePicContentDto;
-import gamebook.gamebook.dto.newPageReturnDto;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Page;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -50,20 +47,15 @@ public class PageService {
                 .collect(Collectors.toList());
     }
 
-    public void updatePicPathAndContent(PagePicContentDto pagePicContentDto) {
-        Page page = pageRepository.findById(pagePicContentDto.getPageId()).get();
-        page.setPicPath(pagePicContentDto.getPicPath());
-        page.setContent(pagePicContentDto.getPageContent());
+
+    public void updatePicPath(PagePicDto pagePicDto) {
+        Page page = pageRepository.findById(pagePicDto.getPageId()).get();
+        page.setPicPath(pagePicDto.getPicPath());
     }
 
-    public void updatePicPath(Long pageId, String picPath) {
-        Page page = pageRepository.findById(pageId).get();
-        page.setPicPath(picPath);
-    }
-
-    public void updateContent(Long pageId, String content) {
-        Page page = pageRepository.findById(pageId).get();
-        page.setContent(content);
+    public void updateContent(PageConDto pageConDto) {
+        Page page = pageRepository.findById(pageConDto.getPageId()).get();
+        page.setContent(pageConDto.getContent());
     }
 
     public void updateFirstChoice(Long pageId, String firstContent, Long nextF) {

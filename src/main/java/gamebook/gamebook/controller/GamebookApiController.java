@@ -1,10 +1,7 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.PagePicContentDto;
-import gamebook.gamebook.dto.PagePicUpdateRequest;
-import gamebook.gamebook.dto.PicAndPathResponseDto;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.file.FileStore;
-import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,17 +22,24 @@ public class GamebookApiController {
     @Value("${file.dir}")
     private String fileDir;
 
-    private final GamebookService gamebookService;
     private final PageService pageService;
     private final FileStore fileStore;
 
-    @PostMapping("/page/update-pic-con")
-    public PicAndPathResponseDto savePicAndContent(PagePicUpdateRequest request) throws IOException {
+
+    @PostMapping("/page/update-pic")
+    public PicResponseDto savePic(PagePicUpdateRequestDto request) throws IOException {
         MultipartFile file = request.getFile();
         String filePath = fileStore.storeFile(file);
-        pageService.updatePicPathAndContent(new PagePicContentDto(request.getPageId(), filePath, request.getContent()));
-        return new PicAndPathResponseDto(filePath, request.getContent());
+        pageService.updatePicPath(new PagePicDto(request.getPageId(), filePath));
+        return new PicResponseDto(filePath);
     }
+
+    @PostMapping("/page/update-con")
+    public ConResponseDto saveCon(PageConUpdateRequestDto request) throws IOException {
+        pageService.updateContent(new PageConDto(request.getPageId(), request.getContent()));
+        return new ConResponseDto(request.getContent());
+    }
+
 
     @GetMapping("/images/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {

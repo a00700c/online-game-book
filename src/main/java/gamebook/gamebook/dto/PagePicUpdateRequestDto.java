@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagePicUpdateRequest {
+public class PagePicUpdateRequestDto {
 
     private MultipartFile file;
-    private String content;
     private Long pageId;
+
 }

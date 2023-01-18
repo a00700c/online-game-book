@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PagePicContentDto {
+public class PageConDto {
 
     private Long pageId;
-    private String picPath;
-    private String pageContent;
+    private String content;
+
 }

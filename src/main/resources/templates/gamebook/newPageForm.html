@@ -16,6 +16,7 @@
             <p>썸네일 사진을 등록하세요</p><br>
             <img id="pagePic" th:src="|/images/${pageForm.picPath}|" width="100" height="100"><br>
             <input id="picture" name="picture" type="file" th:field="*{file}"><br>
+            <input type="button" id="pButton" class="btn btn-primary" value="사진 저장" onclick="savePic()"><br>
             <text id="pageContent" th:text="*{content}">내용 없음</text><br><br>
             <label th:for="content">내용을 입력하세요</label>
             <input id="content" name="content" type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요"
@@ -24,7 +25,7 @@
             <input type="hidden" name="pageId" th:value="${pageId}">
         </div>
     </form>
-    <input type="button" id="aButton" class="btn btn-primary" value="전송" onclick="savePicAndCon()">
+    <input type="button" id="aButton" class="btn btn-primary" value="내용 저장" onclick="saveCon()">
     <br/>
     <a class="btn btn-lg btn-primary" th:href="@{/{gbNum}/list(gbNum=${gbNum})}">페이지 목록 보기</a>
 
@@ -34,12 +35,13 @@
 </body>
 
 <script th:inline="javascript">
-    function savePicAndCon() {
-        let form = $("form")[0];
-        let formData = new FormData(form);
+    function savePic() {
+
+        let picForm = $("form")[0];
+        let formData = new FormData(picForm);
         $.ajax({
             type: "POST",
-            url: "/page/update-pic-con",
+            url: "/page/update-pic",
             data: formData,
             processData: false,
             contentType: false
@@ -47,7 +49,27 @@
             .done(function (result) {
                 console.log(result.filePath);
                 $("#pagePic").attr("src", "/images/" + result.filePath);
-                $("#pageContent").text(result.pageContent);
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function saveCon() {
+        let form = $("form")[0];
+        let formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/page/update-con",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (result) {
+                console.log(result.content);
+                $("#pageContent").text(result.content);
             })
             .fail(function (jqXHR) {
                 console.log(jqXHR);

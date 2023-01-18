@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PicAndPathResponseDto {
+public class PicResponseDto {
 
     String filePath;
-    String pageContent;
+
 }
