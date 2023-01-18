@@ -9,5 +9,5 @@ public class PagePicContentDto {
 
     private Long pageId;
     private String picPath;
-    private String content;
+    private String pageContent;
 }

@@ -2,6 +2,7 @@ package gamebook.gamebook.controller;
 
 import gamebook.gamebook.dto.PagePicContentDto;
 import gamebook.gamebook.dto.PagePicUpdateRequest;
+import gamebook.gamebook.dto.PicAndPathResponseDto;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;
@@ -29,12 +30,11 @@ public class GamebookApiController {
     private final FileStore fileStore;
 
     @PostMapping("/page/update-pic-con")
-    public String savePicAndContent(PagePicUpdateRequest request) throws IOException {
+    public PicAndPathResponseDto savePicAndContent(PagePicUpdateRequest request) throws IOException {
         MultipartFile file = request.getFile();
         String filePath = fileStore.storeFile(file);
         pageService.updatePicPathAndContent(new PagePicContentDto(request.getPageId(), filePath, request.getContent()));
-
-        return "ok";
+        return new PicAndPathResponseDto(filePath, request.getContent());
     }
 
     @GetMapping("/images/{filename}")

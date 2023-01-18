@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageListDto {
+public class PicAndPathResponseDto {
 
-    private String picPath;
-    private Long pageNum;
-    private Long pageId;
-
+    String filePath;
+    String pageContent;
 }

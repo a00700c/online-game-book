@@ -36,14 +36,14 @@ public class PageService {
     public List<PageListDto> showAllPages(Long gbNum) {
         List<Page> findPages = pageRepository.findAllByGamebookGbNumOrderByPageNumAsc(gbNum);
         return findPages.stream()
-                .map(o -> new PageListDto(o.getPicPath(), o.getPageNum()))
+                .map(o -> new PageListDto(o.getPicPath(), o.getPageNum(), o.getPageId()))
                 .collect(Collectors.toList());
     }
 
     public void updatePicPathAndContent(PagePicContentDto pagePicContentDto) {
         Page page = pageRepository.findById(pagePicContentDto.getPageId()).get();
         page.setPicPath(pagePicContentDto.getPicPath());
-        page.setContent(pagePicContentDto.getContent());
+        page.setContent(pagePicContentDto.getPageContent());
     }
 
     public void updatePicPath(Long pageId, String picPath) {

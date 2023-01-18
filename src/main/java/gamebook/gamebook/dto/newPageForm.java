@@ -10,6 +10,7 @@ public class newPageForm {
 
     private MultipartFile file;
     private String content;
+    private String picPath;
     private Long pageNum;
     private String firstContent;
     private String secondContent;

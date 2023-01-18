@@ -12,8 +12,10 @@
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
 
     <div th:each="page : ${findPages}">
-        <img th:src="|/images/${page.picPath}|" width="100" height="100">
-        <text th:text="${page.pageNum}"></text>
+        <a th:href="@{/{gbNum}/{pageId}/{pageNum}/old(gbNum=${gbNum},pageId=${page.pageId},pageNum=${page.pageNum})}">
+            <img th:src="|/images/${page.picPath}|" width="100" height="100">
+            <text th:text="${page.pageNum}"></text>
+        </a>
     </div>
     <form method="post" th:action="@{/{gbNum}/new(gbNum=${gbNum})}"><button type="submit" class="btn btn-lg btn-primary">새 페이지 만들기</button></form>
     <a class="btn btn-lg btn-primary" href="/">제작 종료하기</a>

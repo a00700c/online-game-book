@@ -79,6 +79,13 @@ public class GamebookController {
         return "gamebook/newPageForm";
     }
 
+    @GetMapping("/{gbNum}/{pageId}/{pageNum}/old")
+    public String oldPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
+        model.addAttribute("pageForm", new newPageForm(pageNum));
+        model.addAttribute("pageId", pageId);
+        return "gamebook/newPageForm";
+    }
+
     @PostMapping("/{gbNum}/{pageId}/{pageNum}/new")
     public String updatePage(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum) {
         // to be updated
