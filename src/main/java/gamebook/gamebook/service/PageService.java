@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.PageInfoDto;
 import gamebook.gamebook.dto.PageListDto;
 import gamebook.gamebook.dto.PagePicContentDto;
 import gamebook.gamebook.dto.newPageReturnDto;
@@ -33,6 +34,15 @@ public class PageService {
         return new newPageReturnDto(page.getPageId(), pageNum);
     }
 
+    @Transactional(readOnly = true)
+    public PageInfoDto findPageInfo(Long pageId) {
+        Page page = pageRepository.findById(pageId).get();
+        return new PageInfoDto(page.getPicPath(), page.getContent(),
+                page.getFirstContent(), page.getSecondContent(), page.getThirdContent(),
+                page.getNextF(), page.getNextS(), page.getNextT());
+    }
+
+    @Transactional(readOnly = true)
     public List<PageListDto> showAllPages(Long gbNum) {
         List<Page> findPages = pageRepository.findAllByGamebookGbNumOrderByPageNumAsc(gbNum);
         return findPages.stream()

@@ -81,7 +81,10 @@ public class GamebookController {
 
     @GetMapping("/{gbNum}/{pageId}/{pageNum}/old")
     public String oldPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
-        model.addAttribute("pageForm", new newPageForm(pageNum));
+        PageInfoDto pageInfo = pageService.findPageInfo(pageId);
+        model.addAttribute("pageForm", new newPageForm(pageInfo.getContent(), pageInfo.getPicPath(),
+                pageNum, pageInfo.getFirstContent(), pageInfo.getSecondContent(), pageInfo.getThirdContent(),
+                pageInfo.getNextF(), pageInfo.getNextS(), pageInfo.getNextT()));
         model.addAttribute("pageId", pageId);
         return "gamebook/newPageForm";
     }

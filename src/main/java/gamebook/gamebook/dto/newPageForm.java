@@ -22,4 +22,16 @@ public class newPageForm {
     public newPageForm(Long pageNum) {
         this.pageNum = pageNum;
     }
+
+    public newPageForm(String content, String picPath, Long pageNum, String firstContent, String secondContent, String thirdContent, Long nextF, Long nextS, Long nextT) {
+        this.content = content;
+        this.picPath = picPath;
+        this.pageNum = pageNum;
+        this.firstContent = firstContent;
+        this.secondContent = secondContent;
+        this.thirdContent = thirdContent;
+        this.nextF = nextF;
+        this.nextS = nextS;
+        this.nextT = nextT;
+    }
 }
