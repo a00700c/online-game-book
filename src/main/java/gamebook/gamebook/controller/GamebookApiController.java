@@ -28,8 +28,15 @@ public class GamebookApiController {
 
     @PostMapping("/page/update-pic")
     public PicResponseDto savePic(PagePicUpdateRequestDto request) throws IOException {
+        PageInfoDto pageInfo = pageService.findPageInfo(request.getPageId());
+        if (pageInfo.getPicPath() != null) {
+            fileStore.deleteFile(pageInfo.getPicPath());
+        }
         MultipartFile file = request.getFile();
         String filePath = fileStore.storeFile(file);
+        if (filePath == null) {
+            return null;
+        }
         pageService.updatePicPath(new PagePicDto(request.getPageId(), filePath));
         return new PicResponseDto(filePath);
     }
