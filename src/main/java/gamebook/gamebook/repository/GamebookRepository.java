@@ -12,4 +12,6 @@ public interface GamebookRepository extends JpaRepository<Gamebook, Long> {
     List<Gamebook> findAllByMemberIdOrderByGbNumDesc(String id);
 
     List<Gamebook> findAllByOrderByGbNumDesc();
+
+    List<Gamebook> findAllByOrderByLikeNumDesc();
 }

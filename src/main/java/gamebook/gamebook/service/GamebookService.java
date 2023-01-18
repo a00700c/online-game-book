@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.GamebookCreateDto;
+import gamebook.gamebook.dto.GamebookRankDto;
 import gamebook.gamebook.dto.GamebookReturnDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -76,5 +78,13 @@ public class GamebookService {
         }
         String id = findMember.get().getId();
         return gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GamebookRankDto> rankAllFind() {
+        List<Gamebook> findGamebooks = gamebookRepository.findAllByOrderByLikeNumDesc();
+        return findGamebooks.stream()
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .collect(Collectors.toList());
     }
 }

@@ -16,7 +16,7 @@
         <text th:text="${page.pageNum}"></text>
     </div>
     <form method="post" th:action="@{/{gbNum}/new(gbNum=${gbNum})}"><button type="submit" class="btn btn-lg btn-primary">새 페이지 만들기</button></form>
-
+    <a class="btn btn-lg btn-primary" href="/">제작 종료하기</a>
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->

@@ -20,6 +20,7 @@ public class Gamebook {
     private String title;
     private String thumbnailPath;
     private Long likeNum;
+    private Long commentNum;
     private LocalDateTime gbDate;
     private LocalDateTime chDate;
     private Long isPublic;
@@ -50,6 +51,16 @@ public class Gamebook {
     public Long likeDown() {
         this.likeNum -= 1;
         return likeNum;
+    }
+
+    public Long commentUp() {
+        this.commentNum += 1;
+        return commentNum;
+    }
+
+    public Long commentDown() {
+        this.commentNum -= 1;
+        return commentNum;
     }
 
     public LocalDateTime changeDate() {
@@ -83,6 +94,7 @@ public class Gamebook {
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.likeNum = 0L;
+        this.commentNum = 0L;
         this.gbDate = LocalDateTime.now();
         this.isPublic = 0L;
     }

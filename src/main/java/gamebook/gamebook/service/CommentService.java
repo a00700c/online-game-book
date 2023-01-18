@@ -25,7 +25,7 @@ public class CommentService {
         Member member = memberRepository.findById(memberId).get();
         Gamebook gamebook = gamebookRepository.findById(gbNum).get();
         Comment comment = Comment.createComment(member, gamebook, commentContent);
-
+        gamebook.commentUp();
         commentRepository.save(comment);
         return comment.getId();
     }
