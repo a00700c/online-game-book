@@ -23,9 +23,6 @@ public class FileStore {
             return null;
         }
         List<String> fileNames = createStoreFileName(file);
-        if (fileNames == null) {
-            return null;
-        }
         file.transferTo(new File(fileNames.get(0)));
         return fileNames.get(1);
     }
@@ -42,9 +39,6 @@ public class FileStore {
         List<String> fileNames = new ArrayList<>();
         String uuid = UUID.randomUUID().toString();
         String ext = extractExt(file.getOriginalFilename());
-        if (ext == null) {
-            return null;
-        }
         fileNames.add(fileDir + uuid + "." + ext);
         fileNames.add(uuid + "." + ext);
         return fileNames;
@@ -53,9 +47,6 @@ public class FileStore {
     private String extractExt(String fileName) {
         int pos = fileName.lastIndexOf(".");
         String ext = fileName.substring(pos + 1);
-        if (!(ext.equals("jpg")||ext.equals("jpeg")||ext.equals("JPG")||ext.equals("JPEG")||ext.equals("PNG")||ext.equals("png"))) {
-            return null;
-        }
         return ext;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,13 +32,13 @@ public class GamebookApiController {
     @PostMapping("/page/update-pic")
     public PicResponseDto savePic(PagePicUpdateRequestDto request) throws IOException {
         PageInfoDto pageInfo = pageService.findPageInfo(new PageIdDto(request.getPageId()));
-        if (pageInfo.getPicPath() != null) {
-            fileStore.deleteFile(pageInfo.getPicPath());
-        }
         MultipartFile file = request.getFile();
         String filePath = fileStore.storeFile(file);
         if (filePath == null) {
             return null;
+        }
+        if (pageInfo.getPicPath() != null) {
+            fileStore.deleteFile(pageInfo.getPicPath());
         }
         pageService.updatePicPath(new PagePicDto(request.getPageId(), filePath));
         return new PicResponseDto(filePath);
@@ -97,6 +98,9 @@ public class GamebookApiController {
 
     @GetMapping("/images/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        if (Objects.equals(filename, "null")) {
+            return new UrlResource("file:" + fileDir + "no-image.jpg");
+        }
         return new UrlResource("file:" + fileDir + filename);
     }
 }
