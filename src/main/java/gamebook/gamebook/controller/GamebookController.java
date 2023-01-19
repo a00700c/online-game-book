@@ -83,18 +83,21 @@ public class GamebookController {
 
     @GetMapping("/{gbNum}/{pageId}/{pageNum}/old")
     public String oldPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
-        PageInfoDto pageInfo = pageService.findPageInfo(pageId);
+        PageInfoDto pageInfo = pageService.findPageInfo(new PageIdDto(pageId));
         List<PageListDto> pageList = pageService.showAllPages(gbNum);
         if (pageInfo.getNextF() != null) {
-            Long nextFNum = pageService.findPageNum(pageInfo.getNextF());
+            PageNumDto firstNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextF()));
+            Long nextFNum = firstNumDto.getPageNum();
             model.addAttribute("nextFNum", nextFNum);
         }
         if (pageInfo.getNextS() != null) {
-            Long nextSNum = pageService.findPageNum(pageInfo.getNextS());
+            PageNumDto secondNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextS()));
+            Long nextSNum = secondNumDto.getPageNum();
             model.addAttribute("nextSNum", nextSNum);
         }
         if (pageInfo.getNextT() != null) {
-            Long nextTNum = pageService.findPageNum(pageInfo.getNextT());
+            PageNumDto thirdNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextT()));
+            Long nextTNum = thirdNumDto.getPageNum();
             model.addAttribute("nextTNum", nextTNum);
         }
         model.addAttribute("pageList", pageList);

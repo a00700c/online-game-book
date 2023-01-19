@@ -21,7 +21,6 @@ public class PageService {
     private final PageRepository pageRepository;
 
     public newPageReturnDto makeNewPage(Long gbNum) {
-
         Gamebook gamebook = gamebookRepository.findById(gbNum).get();
         Page page = Page.createPage(gamebook);
         Long pageNum = (long) gamebook.getPages().size();
@@ -32,7 +31,8 @@ public class PageService {
     }
 
     @Transactional(readOnly = true)
-    public PageInfoDto findPageInfo(Long pageId) {
+    public PageInfoDto findPageInfo(PageIdDto pageIdDto) {
+        Long pageId = pageIdDto.getPageId();
         Page page = pageRepository.findById(pageId).get();
         return new PageInfoDto(page.getPicPath(), page.getContent(),
                 page.getFirstContent(), page.getSecondContent(), page.getThirdContent(),
@@ -40,9 +40,10 @@ public class PageService {
     }
 
     @Transactional(readOnly = true)
-    public Long findPageNum(Long pageId) {
+    public PageNumDto findPageNum(PageIdDto pageIdDto) {
+        Long pageId = pageIdDto.getPageId();
         Page page = pageRepository.findById(pageId).get();
-        return page.getPageNum();
+        return new PageNumDto(page.getPageNum());
     }
 
     @Transactional(readOnly = true)

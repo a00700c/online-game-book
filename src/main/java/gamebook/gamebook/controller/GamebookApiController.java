@@ -30,7 +30,7 @@ public class GamebookApiController {
 
     @PostMapping("/page/update-pic")
     public PicResponseDto savePic(PagePicUpdateRequestDto request) throws IOException {
-        PageInfoDto pageInfo = pageService.findPageInfo(request.getPageId());
+        PageInfoDto pageInfo = pageService.findPageInfo(new PageIdDto(request.getPageId()));
         if (pageInfo.getPicPath() != null) {
             fileStore.deleteFile(pageInfo.getPicPath());
         }
@@ -52,21 +52,24 @@ public class GamebookApiController {
     @PostMapping("/page/update-first-choice")
     public PageChoiceResponseDto saveFirstChoice(FirstChoiceRequestDto request) {
         pageService.updateFirstChoice(request.getPageId(), request.getFirstContent(), request.getNextF());
-        Long pageNum = pageService.findPageNum(request.getNextF());
+        PageNumDto pageNumDto = pageService.findPageNum(new PageIdDto(request.getNextF()));
+        Long pageNum = pageNumDto.getPageNum();
         return new PageChoiceResponseDto(pageNum, request.getFirstContent());
     }
 
     @PostMapping("/page/update-second-choice")
     public PageChoiceResponseDto saveSecondChoice(SecondChoiceRequestDto request) {
         pageService.updateSecondChoice(request.getPageId(), request.getSecondContent(), request.getNextS());
-        Long pageNum = pageService.findPageNum(request.getNextS());
+        PageNumDto pageNumDto = pageService.findPageNum(new PageIdDto(request.getNextS()));
+        Long pageNum = pageNumDto.getPageNum();
         return new PageChoiceResponseDto(pageNum, request.getSecondContent());
     }
 
     @PostMapping("/page/update-third-choice")
     public PageChoiceResponseDto saveThirdChoice(ThirdChoiceRequestDto request) {
         pageService.updateThirdChoice(request.getPageId(), request.getThirdContent(), request.getNextT());
-        Long pageNum = pageService.findPageNum(request.getNextT());
+        PageNumDto pageNumDto = pageService.findPageNum(new PageIdDto(request.getNextT()));
+        Long pageNum = pageNumDto.getPageNum();
         return new PageChoiceResponseDto(pageNum, request.getThirdContent());
     }
 
