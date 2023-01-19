@@ -80,17 +80,20 @@ public class PageService {
         page.setThirdChoice(thirdContent, nextT);
     }
 
-    public void deleteFirstChoice(Long pageId) {
+    public void deleteFirstChoice(PageIdDto pageIdDto) {
+        Long pageId = pageIdDto.getPageId();
         Page page = pageRepository.findById(pageId).get();
         page.deleteFirstChoice();
     }
 
-    public void deleteSecondChoice(Long pageId) {
+    public void deleteSecondChoice(PageIdDto pageIdDto) {
+        Long pageId = pageIdDto.getPageId();
         Page page = pageRepository.findById(pageId).get();
         page.deleteSecondChoice();
     }
 
-    public void deleteThirdChoice(Long pageId) {
+    public void deleteThirdChoice(PageIdDto pageIdDto) {
+        Long pageId = pageIdDto.getPageId();
         Page page = pageRepository.findById(pageId).get();
         page.deleteThirdChoice();
     }

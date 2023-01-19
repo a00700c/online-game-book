@@ -30,6 +30,8 @@
     <form id="firstForm" role="form" th:object="${pageForm}">
         <label for="firstChoice">첫번째 선택지 : <span id="firstChoiceNum" th:text="${nextFNum}"></span></label>
         <select class="form-control" id="firstChoice" th:field="${pageForm.nextF}">
+            <option value="-1">선택지 삭제</option>
+            <option value="0">메인 페이지로</option>
             <option th:each="page : ${pageList}" th:value="${page.pageId}" th:text="${page.pageNum}"></option>
         </select>
         <label for="firstContent">첫번째 선택지 내용 : <span id="firstChoiceCon" th:text="${pageForm.firstContent}"></span></label>
@@ -41,7 +43,9 @@
     <form id="secondForm" role="form" th:object="${pageForm}">
         <label for="secondChoice">두번째 선택지 : <span id="secondChoiceNum" th:text="${nextSNum}"></span></label>
         <select class="form-control" id="secondChoice" th:field="${pageForm.nextS}">
-            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:value2="${page.pageNum}" th:text="${page.pageNum}"></option>
+            <option value="-1">선택지 삭제</option>
+            <option value="0">메인 페이지로</option>
+            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:text="${page.pageNum}"></option>
         </select>
         <label for="secondContent">두번째 선택지 내용 : <span id="secondChoiceCon" th:text="${pageForm.secondContent}"></span></label>
         <input id="secondContent" type="text" th:field="*{secondContent}" class="form-control" placeholder="두번째 선택지 내용"><br>
@@ -53,7 +57,9 @@
     <form id="thirdForm" role="form" th:object="${pageForm}">
         <label for="thirdChoice">세번째 선택지 : <span id="thirdChoiceNum" th:text="${nextTNum}"></span></label>
         <select class="form-control" id="thirdChoice" th:field="${pageForm.nextT}">
-            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:value2="${page.pageNum}" th:text="${page.pageNum}"></option>
+            <option value="-1">선택지 삭제</option>
+            <option value="0">메인 페이지로</option>
+            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:text="${page.pageNum}"></option>
         </select>
         <label for="thirdContent">세번째 선택지 내용 : <span id="thirdChoiceCon" th:text="${pageForm.thirdContent}"></span></label>
         <input id="thirdContent" type="text" th:field="*{thirdContent}" class="form-control" placeholder="세번째 선택지 내용"><br>
@@ -127,7 +133,11 @@
             contentType: false
         })
             .done(function (result) {
-                $("#firstChoiceNum").text(result.next);
+                if (result.next == 0) {
+                    $("#firstChoiceNum").text("메인 페이지");
+                } else {
+                    $("#firstChoiceNum").text(result.next);
+                }
                 $("#firstChoiceCon").text(result.content);
             })
             .fail(function (jqXHR) {
@@ -148,7 +158,11 @@
             contentType: false
         })
             .done(function (result) {
-                $("#secondChoiceNum").text(result.next);
+                if (result.next == 0) {
+                    $("#secondChoiceNum").text("메인 페이지");
+                } else {
+                    $("#secondChoiceNum").text(result.next);
+                }
                 $("#secondChoiceCon").text(result.content);
             })
             .fail(function (jqXHR) {
@@ -169,7 +183,11 @@
             contentType: false
         })
             .done(function (result) {
-                $("#thirdChoiceNum").text(result.next);
+                if (result.next == 0) {
+                    $("#thirdChoiceNum").text("메인 페이지");
+                } else {
+                    $("#thirdChoiceNum").text(result.next);
+                }
                 $("#thirdChoiceCon").text(result.content);
             })
             .fail(function (jqXHR) {

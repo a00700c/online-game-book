@@ -85,20 +85,26 @@ public class GamebookController {
     public String oldPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
         PageInfoDto pageInfo = pageService.findPageInfo(new PageIdDto(pageId));
         List<PageListDto> pageList = pageService.showAllPages(gbNum);
-        if (pageInfo.getNextF() != null) {
+        if (pageInfo.getNextF() != null && pageInfo.getNextF() != 0) {
             PageNumDto firstNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextF()));
             Long nextFNum = firstNumDto.getPageNum();
             model.addAttribute("nextFNum", nextFNum);
+        } else if (pageInfo.getNextF() != null && pageInfo.getNextF() == 0) {
+            model.addAttribute("nextFNum", "메인페이지");
         }
-        if (pageInfo.getNextS() != null) {
+        if (pageInfo.getNextS() != null && pageInfo.getNextS() != 0) {
             PageNumDto secondNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextS()));
             Long nextSNum = secondNumDto.getPageNum();
             model.addAttribute("nextSNum", nextSNum);
+        } else if (pageInfo.getNextS() != null && pageInfo.getNextS() == 0) {
+            model.addAttribute("nextSNum", "메인페이지");
         }
-        if (pageInfo.getNextT() != null) {
+        if (pageInfo.getNextT() != null && pageInfo.getNextT() != 0) {
             PageNumDto thirdNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextT()));
             Long nextTNum = thirdNumDto.getPageNum();
             model.addAttribute("nextTNum", nextTNum);
+        } else if (pageInfo.getNextT() != null && pageInfo.getNextT() == 0) {
+            model.addAttribute("nextTNum", "메인페이지");
         }
         model.addAttribute("pageList", pageList);
         model.addAttribute("pageForm", new newPageForm(pageInfo.getContent(), pageInfo.getPicPath(),
