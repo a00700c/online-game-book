@@ -3,6 +3,7 @@ package gamebook.gamebook.controller;
 import gamebook.gamebook.dto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.PageService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +47,27 @@ public class GamebookApiController {
     public ConResponseDto saveCon(PageConUpdateRequestDto request) throws IOException {
         pageService.updateContent(new PageConDto(request.getPageId(), request.getContent()));
         return new ConResponseDto(request.getContent());
+    }
+
+    @PostMapping("/page/update-first-choice")
+    public PageChoiceResponseDto saveFirstChoice(FirstChoiceRequestDto request) {
+        pageService.updateFirstChoice(request.getPageId(), request.getFirstContent(), request.getNextF());
+        Long pageNum = pageService.findPageNum(request.getNextF());
+        return new PageChoiceResponseDto(pageNum, request.getFirstContent());
+    }
+
+    @PostMapping("/page/update-second-choice")
+    public PageChoiceResponseDto saveSecondChoice(SecondChoiceRequestDto request) {
+        pageService.updateSecondChoice(request.getPageId(), request.getSecondContent(), request.getNextS());
+        Long pageNum = pageService.findPageNum(request.getNextS());
+        return new PageChoiceResponseDto(pageNum, request.getSecondContent());
+    }
+
+    @PostMapping("/page/update-third-choice")
+    public PageChoiceResponseDto saveThirdChoice(ThirdChoiceRequestDto request) {
+        pageService.updateThirdChoice(request.getPageId(), request.getThirdContent(), request.getNextT());
+        Long pageNum = pageService.findPageNum(request.getNextT());
+        return new PageChoiceResponseDto(pageNum, request.getThirdContent());
     }
 
 

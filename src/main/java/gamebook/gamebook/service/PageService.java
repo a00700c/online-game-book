@@ -40,6 +40,12 @@ public class PageService {
     }
 
     @Transactional(readOnly = true)
+    public Long findPageNum(Long pageId) {
+        Page page = pageRepository.findById(pageId).get();
+        return page.getPageNum();
+    }
+
+    @Transactional(readOnly = true)
     public List<PageListDto> showAllPages(Long gbNum) {
         List<Page> findPages = pageRepository.findAllByGamebookGbNumOrderByPageNumAsc(gbNum);
         return findPages.stream()

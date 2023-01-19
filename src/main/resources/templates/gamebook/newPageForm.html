@@ -25,8 +25,43 @@
             <input type="hidden" name="pageId" th:value="${pageId}">
         </div>
     </form>
-    <input type="button" id="aButton" class="btn btn-primary" value="내용 저장" onclick="saveCon()">
+    <input type="button" id="aButton" class="btn btn-primary" value="내용 저장" onclick="saveCon()"><br>
     <br/>
+    <form id="firstForm" role="form" th:object="${pageForm}">
+        <label for="firstChoice">첫번째 선택지 : <span id="firstChoiceNum" th:text="${nextFNum}"></span></label>
+        <select class="form-control" id="firstChoice" th:field="${pageForm.nextF}">
+            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:text="${page.pageNum}"></option>
+        </select>
+        <label for="firstContent">첫번째 선택지 내용 : <span id="firstChoiceCon" th:text="${pageForm.firstContent}"></span></label>
+        <input id="firstContent" type="text" th:field="*{firstContent}" class="form-control" placeholder="첫번째 선택지 내용"><br>
+        <input type="hidden" name="pageId" th:value="${pageId}">
+    </form>
+    <input type="button" id="firstButton" class="btn btn-primary" value="첫번째 선택지 저장" onclick="saveFirstChoice()"><br>
+
+    <form id="secondForm" role="form" th:object="${pageForm}">
+        <label for="secondChoice">두번째 선택지 : <span id="secondChoiceNum" th:text="${nextSNum}"></span></label>
+        <select class="form-control" id="secondChoice" th:field="${pageForm.nextS}">
+            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:value2="${page.pageNum}" th:text="${page.pageNum}"></option>
+        </select>
+        <label for="secondContent">두번째 선택지 내용 : <span id="secondChoiceCon" th:text="${pageForm.secondContent}"></span></label>
+        <input id="secondContent" type="text" th:field="*{secondContent}" class="form-control" placeholder="두번째 선택지 내용"><br>
+        <input type="hidden" name="pageId" th:value="${pageId}">
+    </form>
+    <input type="button" id="secondButton" class="btn btn-primary" value="두번째 선택지 저장" onclick="saveSecondChoice()"><br>
+
+
+    <form id="thirdForm" role="form" th:object="${pageForm}">
+        <label for="thirdChoice">세번째 선택지 : <span id="thirdChoiceNum" th:text="${nextTNum}"></span></label>
+        <select class="form-control" id="thirdChoice" th:field="${pageForm.nextT}">
+            <option th:each="page : ${pageList}" th:value="${page.pageId}" th:value2="${page.pageNum}" th:text="${page.pageNum}"></option>
+        </select>
+        <label for="thirdContent">세번째 선택지 내용 : <span id="thirdChoiceCon" th:text="${pageForm.thirdContent}"></span></label>
+        <input id="thirdContent" type="text" th:field="*{thirdContent}" class="form-control" placeholder="세번째 선택지 내용"><br>
+        <input type="hidden" name="pageId" th:value="${pageId}">
+    </form>
+    <input type="button" id="thirdButton" class="btn btn-primary" value="세번째 선택지 저장" onclick="saveThirdChoice()"><br>
+
+
     <a class="btn btn-lg btn-primary" th:href="@{/{gbNum}/list(gbNum=${gbNum})}">페이지 목록 보기</a>
 
     <div th:replace="~{fragments/footer :: footer}"></div>
@@ -72,8 +107,70 @@
             contentType: false
         })
             .done(function (result) {
-                console.log(result.content);
                 $("#pageContent").text(result.content);
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function saveFirstChoice() {
+        let form = $("#firstForm")[0];
+        let formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/page/update-first-choice",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (result) {
+                $("#firstChoiceNum").text(result.next);
+                $("#firstChoiceCon").text(result.content);
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function saveSecondChoice() {
+        let form = $("#secondForm")[0];
+        let formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/page/update-second-choice",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (result) {
+                $("#secondChoiceNum").text(result.next);
+                $("#secondChoiceCon").text(result.content);
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function saveThirdChoice() {
+        let form = $("#thirdForm")[0];
+        let formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/page/update-third-choice",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (result) {
+                $("#thirdChoiceNum").text(result.next);
+                $("#thirdChoiceCon").text(result.content);
             })
             .fail(function (jqXHR) {
                 console.log(jqXHR);

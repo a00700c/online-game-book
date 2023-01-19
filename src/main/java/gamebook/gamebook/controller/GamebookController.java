@@ -74,6 +74,8 @@ public class GamebookController {
 
     @GetMapping("/{gbNum}/{pageId}/{pageNum}/new")
     public String newPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
+        List<PageListDto> pageList = pageService.showAllPages(gbNum);
+        model.addAttribute("pageList", pageList);
         model.addAttribute("pageForm", new newPageForm(pageNum));
         model.addAttribute("pageId", pageId);
         return "gamebook/newPageForm";
@@ -82,6 +84,20 @@ public class GamebookController {
     @GetMapping("/{gbNum}/{pageId}/{pageNum}/old")
     public String oldPageForm(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum, Model model) {
         PageInfoDto pageInfo = pageService.findPageInfo(pageId);
+        List<PageListDto> pageList = pageService.showAllPages(gbNum);
+        if (pageInfo.getNextF() != null) {
+            Long nextFNum = pageService.findPageNum(pageInfo.getNextF());
+            model.addAttribute("nextFNum", nextFNum);
+        }
+        if (pageInfo.getNextS() != null) {
+            Long nextSNum = pageService.findPageNum(pageInfo.getNextS());
+            model.addAttribute("nextSNum", nextSNum);
+        }
+        if (pageInfo.getNextT() != null) {
+            Long nextTNum = pageService.findPageNum(pageInfo.getNextT());
+            model.addAttribute("nextTNum", nextTNum);
+        }
+        model.addAttribute("pageList", pageList);
         model.addAttribute("pageForm", new newPageForm(pageInfo.getContent(), pageInfo.getPicPath(),
                 pageNum, pageInfo.getFirstContent(), pageInfo.getSecondContent(), pageInfo.getThirdContent(),
                 pageInfo.getNextF(), pageInfo.getNextS(), pageInfo.getNextT()));
