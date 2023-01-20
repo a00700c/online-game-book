@@ -1,9 +1,6 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.GamebookMyPageDto;
-import gamebook.gamebook.dto.GamebookRankDto;
-import gamebook.gamebook.dto.MemberChangeDto;
-import gamebook.gamebook.dto.MemberIdDto;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.MemberService;
@@ -53,9 +50,11 @@ public class HomeController {
 
     @GetMapping("/my-page/change-user-data")
     public String changeUserForm(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
-        MemberChangeDto userInfo = memberService.findUserPasswordAndNickname(new MemberIdDto(loginId));
+        MemberPasswordNicknameDto userInfo = memberService.findUserPasswordAndNickname(new MemberIdDto(loginId));
         model.addAttribute("userId", loginId);
-        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("password", userInfo.getPassword());
+        model.addAttribute("nickname", userInfo.getNickname());
+        model.addAttribute("userInfo", new MemberChangeDto());
         return "myPage/changeUserForm";
     }
 

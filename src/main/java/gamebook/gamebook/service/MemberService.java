@@ -50,10 +50,10 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberChangeDto findUserPasswordAndNickname(MemberIdDto memberIdDto) {
+    public MemberPasswordNicknameDto findUserPasswordAndNickname(MemberIdDto memberIdDto) {
         String id = memberIdDto.getId();
         Member member = memberRepository.findById(id).get();
-        return new MemberChangeDto(member.getPassword(), member.getNickname());
+        return new MemberPasswordNicknameDto(member.getPassword(), member.getNickname());
     }
 
     @Transactional(readOnly = true)
@@ -71,7 +71,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public void updatePassword(MemberUpdatePasswordRequest memberDto) {
+    public void updatePassword(MemberUpdatePasswordDto memberDto) {
         Member member = memberRepository.findById(memberDto.getUserId()).get();
         member.changePassword(memberDto.getPassword());
     }

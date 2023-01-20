@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MemberUpdatePasswordResponse {
+public class MemberUpdatePasswordDto {
 
+    private String userId;
     private String password;
-    private Boolean isSuccess;
-    private String errorMessage;
+
 }

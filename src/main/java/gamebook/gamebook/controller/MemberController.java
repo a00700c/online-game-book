@@ -25,7 +25,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/members/new")
-    public String createForm(Model model) {
+    public String createForm(Model model, MemberJoinRequestDto memberJoinRequestDto) {
         model.addAttribute("memberJoinRequestDto", new MemberJoinRequestDto());
         return "members/createMemberForm";
     }
