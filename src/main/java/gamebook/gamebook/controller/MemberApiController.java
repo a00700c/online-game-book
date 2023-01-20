@@ -45,16 +45,5 @@ public class MemberApiController {
         return new MemberUpdateNicknameResponse(request.getNickname(), true, null);
     }
 
-//    @ResponseBody
-//    @PatchMapping("/member/change-password")
-//    public String checkPassword(HttpServletRequest request) {
-//        Enumeration params = request.getParameterNames();
-//        while(params.hasMoreElements()) {
-//            String name = (String) params.nextElement();
-//            System.out.print(name + " : " + request.getParameter(name) + "     ");
-//        }
-//        System.out.println();
-//
-//        return "hi";
-//    }
+
 }

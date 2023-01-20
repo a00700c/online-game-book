@@ -114,9 +114,4 @@ public class GamebookController {
         return "gamebook/newPageForm";
     }
 
-    @PostMapping("/{gbNum}/{pageId}/{pageNum}/new")
-    public String updatePage(@PathVariable Long gbNum, @PathVariable Long pageId, @PathVariable Long pageNum) {
-        // to be updated
-        return "redirect:/{gbNum}/list";
-    }
 }

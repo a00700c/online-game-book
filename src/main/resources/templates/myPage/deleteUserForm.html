@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <p>당신의 아이디는 <span th:text="${userId}"></span> 입니다.<br> 정말 탈퇴하시겠습니까?<br></p>
+    <form method="post" action="/my-page/delete-user">
+        <button type="submit" class="btn btn-lg btn-primary">탈퇴</button>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="id" th:value="${userId}">
+    </form>
+    <br><br>
+    <a class="btn btn-lg btn-primary" href="/my-page">마이 페이지로 돌아가기</a>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
+
+</body>
+
+<script src="/js/changeUserForm.js" th:inline="javascript"></script>
+</html>

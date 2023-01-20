@@ -5,13 +5,13 @@ import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.MemberService;
 import gamebook.gamebook.web.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,9 +58,26 @@ public class HomeController {
         return "myPage/changeUserForm";
     }
 
+    @GetMapping("/my-page/delete-user")
+    public String deleteUserForm(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
+        model.addAttribute("userId", loginId);
+        return "myPage/deleteUserForm";
+    }
+
+    @PostMapping("/my-page/delete-user")
+    public String deleteUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            String id = (String) session.getAttribute(SessionConst.MEMBER_ID);
+            session.invalidate();
+            memberService.deleteMember(id);
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/my-page/my-make-list")
     public String showMyMakeList(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
-        List<GamebookMyPageDto> findGamebooks = gamebookService.findAllByMemberId(loginId);
+        List<GamebookMyPageDto> findGamebooks = gamebookService.findAllByMemberId(new MemberIdDto(loginId));
         model.addAttribute("findGamebooks", findGamebooks);
         return "myPage/myMakeList";
     }
