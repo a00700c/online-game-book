@@ -1,13 +1,12 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.MemberUpdatePasswordDto;
-import gamebook.gamebook.dto.MemberUpdatePasswordRequest;
-import gamebook.gamebook.dto.MemberUpdatePasswordResponse;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
@@ -25,8 +24,25 @@ public class MemberApiController {
         if (bindingResult.hasErrors()) {
             return new MemberUpdatePasswordResponse(null, false, bindingResult.getFieldError().getDefaultMessage() );
         }
-        memberService.updatePassword(new MemberUpdatePasswordDto(request.getUserId(), request.getPassword()));
+        memberService.updatePassword(request);
         return new MemberUpdatePasswordResponse(request.getPassword(), true, null);
+    }
+
+    @PatchMapping("/member/change-nickname")
+    public MemberUpdateNicknameResponse changeNickname(@Valid MemberUpdateNicknameRequest request, BindingResult bindingResult) {
+
+        try {
+            memberService.validateDuplicateNickname(request.getNickname());
+        } catch (IllegalStateException e) {
+            bindingResult.addError(new FieldError("memberJoinRequestDto", "nickname", "이미 동일한 닉네임이 존재합니다"));
+        }
+
+
+        if (bindingResult.hasErrors()) {
+            return new MemberUpdateNicknameResponse(null, false, bindingResult.getFieldError().getDefaultMessage() );
+        }
+        memberService.updateNickname(request);
+        return new MemberUpdateNicknameResponse(request.getNickname(), true, null);
     }
 
 //    @ResponseBody

@@ -71,14 +71,14 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public void updatePassword(MemberUpdatePasswordDto memberDto) {
+    public void updatePassword(MemberUpdatePasswordRequest memberDto) {
         Member member = memberRepository.findById(memberDto.getUserId()).get();
         member.changePassword(memberDto.getPassword());
     }
 
-    public void updateNickname(String id, String nickname) {
-        Member member = memberRepository.findById(id).get();
-        member.changeNickname(nickname);
+    public void updateNickname(MemberUpdateNicknameRequest memberDto) {
+        Member member = memberRepository.findById(memberDto.getUserId()).get();
+        member.changeNickname(memberDto.getNickname());
     }
 
     public void deleteMember(String id) {

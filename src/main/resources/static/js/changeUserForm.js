@@ -20,3 +20,26 @@ function updatePassword() {
         .always(function () {
         })
 }
+
+function updateNickname() {
+    $.ajax({
+        type: "PATCH",
+        url: "/member/change-nickname",
+        data: $("#nicknameForm").serialize()
+    })
+        .done(function (result) {
+            if (result.isSuccess) {
+                $("#changeNickname").text(result.nickname);
+                $("#nickname").css('border-color', "");
+                $("#nicknameErrorMessage").text(null);
+            } else {
+                $("#nickname").css('border-color', "#bd2130");
+                $("#nicknameErrorMessage").text(result.errorMessage + "");
+            }
+        })
+        .fail(function (jqXHR) {
+            console.log(jqXHR);
+        })
+        .always(function () {
+        })
+}
