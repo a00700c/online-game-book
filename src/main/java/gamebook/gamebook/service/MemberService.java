@@ -1,7 +1,6 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.MemberJoinRequestDto;
-import gamebook.gamebook.dto.MemberPasswordDto;
+import gamebook.gamebook.dto.*;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +50,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
+    public MemberChangeDto findUserPasswordAndNickname(MemberIdDto memberIdDto) {
+        String id = memberIdDto.getId();
+        Member member = memberRepository.findById(id).get();
+        return new MemberChangeDto(member.getPassword(), member.getNickname());
+    }
+
+    @Transactional(readOnly = true)
     public MemberPasswordDto findPasswordById(String id) {
         Optional<Member> findMember = memberRepository.findById(id);
         if (findMember.isEmpty()) {
@@ -63,6 +69,11 @@ public class MemberService {
     @Transactional(readOnly = true)
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    public void updatePassword(MemberUpdatePasswordRequest memberDto) {
+        Member member = memberRepository.findById(memberDto.getUserId()).get();
+        member.changePassword(memberDto.getPassword());
     }
 
     public void updateNickname(String id, String nickname) {

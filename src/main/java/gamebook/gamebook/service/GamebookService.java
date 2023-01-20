@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.GamebookCreateDto;
+import gamebook.gamebook.dto.GamebookMyPageDto;
 import gamebook.gamebook.dto.GamebookRankDto;
 import gamebook.gamebook.dto.GamebookReturnDto;
 import gamebook.gamebook.entity.Gamebook;
@@ -78,6 +79,14 @@ public class GamebookService {
         }
         String id = findMember.get().getId();
         return gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GamebookMyPageDto> findAllByMemberId(String id) {
+        List<Gamebook> findGamebooks = gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
+        return findGamebooks.stream()
+                .map(o -> new GamebookMyPageDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getCommentNum(), o.getGbDate(), o.getChDate(), o.getIsPublic()))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

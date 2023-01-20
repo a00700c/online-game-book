@@ -38,5 +38,9 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
 
 }
