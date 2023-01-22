@@ -1,6 +1,9 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.memberDto.MemberUpdateNicknameRequest;
+import gamebook.gamebook.dto.memberDto.MemberUpdateNicknameResponse;
+import gamebook.gamebook.dto.memberDto.MemberUpdatePasswordRequest;
+import gamebook.gamebook.dto.memberDto.MemberUpdatePasswordResponse;
 import gamebook.gamebook.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor

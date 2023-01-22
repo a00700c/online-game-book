@@ -1,8 +1,7 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.MemberJoinRequestDto;
+import gamebook.gamebook.dto.memberDto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Comment;
-import gamebook.gamebook.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

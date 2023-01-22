@@ -1,6 +1,8 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookForm;
+import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;

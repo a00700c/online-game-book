@@ -1,13 +1,13 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.pageDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class newPageReturnDto {
+public class PageConDto {
 
     private Long pageId;
-    private Long pageNum;
+    private String content;
 
 }

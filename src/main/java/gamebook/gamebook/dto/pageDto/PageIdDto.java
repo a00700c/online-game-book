@@ -1,13 +1,11 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.pageDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PagePicDto {
+public class PageIdDto {
 
     private Long pageId;
-    private String picPath;
-
 }

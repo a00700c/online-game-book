@@ -1,13 +1,13 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.memberDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MemberUpdateNicknameResponse {
+public class MemberUpdatePasswordResponse {
 
-    private String nickname;
+    private String password;
     private Boolean isSuccess;
     private String errorMessage;
 }

@@ -1,6 +1,6 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.memberDto.*;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

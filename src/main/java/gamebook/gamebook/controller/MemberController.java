@@ -1,8 +1,7 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.MemberJoinRequestDto;
-import gamebook.gamebook.dto.MemberLoginRequestDto;
-import gamebook.gamebook.entity.Member;
+import gamebook.gamebook.dto.memberDto.MemberJoinRequestDto;
+import gamebook.gamebook.dto.memberDto.MemberLoginRequestDto;
 import gamebook.gamebook.service.MemberService;
 import gamebook.gamebook.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;

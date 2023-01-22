@@ -1,4 +1,4 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.gamebookDto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

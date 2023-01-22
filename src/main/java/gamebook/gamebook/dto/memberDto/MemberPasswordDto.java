@@ -1,4 +1,4 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.memberDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageConUpdateRequestDto {
+public class MemberPasswordDto {
 
-    private String content;
-    private Long pageId;
+    private String password;
 }

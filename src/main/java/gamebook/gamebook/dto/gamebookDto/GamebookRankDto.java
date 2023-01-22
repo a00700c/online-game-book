@@ -1,23 +1,18 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.gamebookDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GamebookMyPageDto {
+public class GamebookRankDto {
 
     private Long gbNum;
     private String title;
     private String thumbnailPath;
     private Long likeNum;
-    private Long commentNum;
-    private LocalDateTime gbDate;
-    private LocalDateTime chDate;
-    private Long isPublic;
-
+    private String nickname;
+    private Long commentCount;
 }

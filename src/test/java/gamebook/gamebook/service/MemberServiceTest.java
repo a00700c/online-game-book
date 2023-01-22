@@ -1,6 +1,6 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.MemberJoinRequestDto;
+import gamebook.gamebook.dto.memberDto.MemberJoinRequestDto;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
 import gamebook.gamebook.repository.MemberRepository;

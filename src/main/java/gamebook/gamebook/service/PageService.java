@@ -1,6 +1,6 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Page;
 import gamebook.gamebook.repository.GamebookRepository;

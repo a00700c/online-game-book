@@ -1,4 +1,4 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.memberDto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

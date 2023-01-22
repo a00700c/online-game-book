@@ -1,7 +1,10 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.*;
-import gamebook.gamebook.entity.Member;
+import gamebook.gamebook.dto.gamebookDto.GamebookMyPageDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
+import gamebook.gamebook.dto.memberDto.MemberChangeDto;
+import gamebook.gamebook.dto.memberDto.MemberIdDto;
+import gamebook.gamebook.dto.memberDto.MemberPasswordNicknameDto;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.MemberService;
 import gamebook.gamebook.web.SessionConst;

@@ -1,6 +1,10 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookMyPageDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookReturnDto;
+import gamebook.gamebook.dto.memberDto.MemberIdDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
