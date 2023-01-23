@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.CommentInfoDto;
+import gamebook.gamebook.dto.commentDto.CommentCreateDto;
+import gamebook.gamebook.dto.commentDto.CommentInfoDto;
 import gamebook.gamebook.entity.Comment;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
@@ -23,13 +24,14 @@ public class CommentService {
     private final GamebookRepository gamebookRepository;
     private final CommentRepository commentRepository;
 
-    public Long makeNewComment(String memberId, Long gbNum, String commentContent) {
-        Member member = memberRepository.findById(memberId).get();
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
-        Comment comment = Comment.createComment(member, gamebook, commentContent);
+    public CommentInfoDto makeNewComment(CommentCreateDto commentCreateDto) {
+        Member member = memberRepository.findById(commentCreateDto.getMemberId()).get();
+        Gamebook gamebook = gamebookRepository.findById(commentCreateDto.getGbNum()).get();
+        Comment comment = Comment.createComment(member, gamebook, commentCreateDto.getCommentContent());
         gamebook.commentUp();
         commentRepository.save(comment);
-        return comment.getId();
+        return new CommentInfoDto(comment.getId(), comment.getCommentContent(), comment.getRegDate(),
+                comment.getMember().getId(), comment.getMember().getNickname());
     }
 
     @Transactional(readOnly = true)

@@ -1,17 +1,21 @@
 package gamebook.gamebook.controller;
 
+import gamebook.gamebook.dto.commentDto.CommentCreateDto;
+import gamebook.gamebook.dto.commentDto.CommentInfoDto;
+import gamebook.gamebook.dto.commentDto.CommentRegisterRequest;
 import gamebook.gamebook.service.CommentService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Enumeration;
+import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class CommentApiController {
@@ -25,14 +29,11 @@ public class CommentApiController {
     }
 
     @PostMapping("/comment")
-    public String registerComment(HttpServletRequest request) {
-        Enumeration params = request.getParameterNames();
-        while(params.hasMoreElements()) {
-            String name = (String) params.nextElement();
-            System.out.print(name + " : " + request.getParameter(name) + "     ");
-        }
-        System.out.println();
-
-        return "success";
+    public String registerComment(CommentRegisterRequest request, Model model) {
+        commentService.makeNewComment(new CommentCreateDto(request.getCommentUserId(), request.getGbNum(), request.getCommentContent()));
+        List<CommentInfoDto> comments = commentService.findByGamebook(request.getGbNum());
+        model.addAttribute("commentInfo", comments);
+        model.addAttribute("userId", request.getCommentUserId());
+        return "fragments/commentFrag";
     }
 }

@@ -1,4 +1,4 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.commentDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

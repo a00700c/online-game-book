@@ -1,0 +1,11 @@
+<div id="commentDiv">
+    <div th:each="comment : ${commentInfo}">
+        <text> 댓글 작성자 : <span th:text="${comment.memberNickname}"></span></text>
+        <text> 댓글 작성시간 : <span th:text="${comment.regDate}"></span></text><br>
+        <text th:text="${comment.commentContent}"></text>
+        <div th:if="${comment.memberId == userId}">
+            <input type="hidden" th:id="${comment.commentId}" name="commentId" th:value="${comment.commentId}">
+            <input type="button" class="btn btn-secondary" value="댓글 삭제" onclick="deleteComment()"><br>
+        </div>
+    </div>
+</div>

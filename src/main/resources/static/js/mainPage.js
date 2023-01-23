@@ -24,17 +24,11 @@ function inputComment() {
     $.ajax({
         type: "POST",
         url: "/comment",
-        data: $("#commentForm").serialize()
+        data: $("#commentForm").serialize(),
+        dataType: "html",
     })
         .done(function (result) {
-            if (result.isSuccess) {
-                $("#changeNickname").text(result.nickname);
-                $("#nickname").css('border-color', "");
-                $("#nicknameErrorMessage").text(null);
-            } else {
-                $("#nickname").css('border-color', "#bd2130");
-                $("#nicknameErrorMessage").text(result.errorMessage + "");
-            }
+            $("#commentDiv").replaceWith(result);
         })
         .fail(function (jqXHR) {
             console.log(jqXHR);

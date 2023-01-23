@@ -1,12 +1,11 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.CommentInfoDto;
+import gamebook.gamebook.dto.commentDto.CommentInfoDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookForm;
 import gamebook.gamebook.dto.gamebookDto.GamebookGbNumDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookMainPageDto;
 import gamebook.gamebook.dto.pageDto.*;
-import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.CommentService;
 import gamebook.gamebook.service.GamebookService;
