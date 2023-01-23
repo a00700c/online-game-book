@@ -27,16 +27,15 @@
         </text>
     </div>
 
-    <text>댓글 <span th:text="${gamebookInfo.commentNum}"></span> 개</text>
-    <text>좋아요 <span th:text="${gamebookInfo.likeNum}"></span> 개</text><br>
+    <text>댓글 <span id="commentCount" th:text="${gamebookInfo.commentNum}"></span> 개</text>
+    <text>좋아요 <span id="likeCount" th:text="${gamebookInfo.likeNum}"></span> 개</text><br>
     <div id="commentDiv">
         <div th:each="comment : ${commentInfo}">
             <text> 댓글 작성자 : <span th:text="${comment.memberNickname}"></span></text>
             <text> 댓글 작성시간 : <span th:text="${comment.regDate}"></span></text><br>
             <text th:text="${comment.commentContent}"></text>
             <div th:if="${comment.memberId == userId}">
-                <input type="hidden" th:id="${comment.commentId}" name="commentId" th:value="${comment.commentId}">
-                <input type="button" class="btn btn-secondary" value="댓글 삭제" onclick="deleteComment()"><br>
+                <button class="btn btn-secondary" th:data-name="${comment.commentId}" th:onclick="deleteComment([[${comment.commentId}]])">댓글 삭제</button><br>
             </div>
         </div>
     </div>
@@ -54,5 +53,50 @@
 
 </body>
 
-<script src="/js/mainPage.js" th:inline="javascript"></script>
+<script th:inline="javascript">
+    function deleteComment(getId) {
+        let gbNum = [[${gamebookInfo.gbNum}]];
+
+        $.ajax({
+            type: "DELETE",
+            url: "/comment/" + gbNum + "/" + getId,
+            dataType: "html",
+        })
+            .done(function (result) {
+                if (result) {
+                    $("#commentDiv").replaceWith(result);
+                    let text = $("#commentCount").text();
+                    text = parseInt(text);
+                    $("#commentCount").text(text - 1);
+                }
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function inputComment() {
+        $.ajax({
+            type: "POST",
+            url: "/comment",
+            data: $("#commentForm").serialize(),
+            dataType: "html",
+        })
+            .done(function (result) {
+                $("#commentDiv").replaceWith(result);
+                let text = $("#commentCount").text();
+                text = parseInt(text);
+                $("#commentCount").text(text + 1);
+                $("#commentContent").val('');
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+</script>
 </html>

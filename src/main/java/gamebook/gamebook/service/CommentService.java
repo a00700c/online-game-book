@@ -1,6 +1,7 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.commentDto.CommentCreateDto;
+import gamebook.gamebook.dto.commentDto.CommentDeleteDto;
 import gamebook.gamebook.dto.commentDto.CommentInfoDto;
 import gamebook.gamebook.entity.Comment;
 import gamebook.gamebook.entity.Gamebook;
@@ -32,6 +33,13 @@ public class CommentService {
         commentRepository.save(comment);
         return new CommentInfoDto(comment.getId(), comment.getCommentContent(), comment.getRegDate(),
                 comment.getMember().getId(), comment.getMember().getNickname());
+    }
+
+    public void deleteComment(CommentDeleteDto commentDeleteDto) {
+        Comment comment = commentRepository.findById(commentDeleteDto.getCommentId()).get();
+        commentRepository.delete(comment);
+        Gamebook gamebook = gamebookRepository.findById(commentDeleteDto.getGbNum()).get();
+        gamebook.commentDown();
     }
 
     @Transactional(readOnly = true)

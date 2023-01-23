@@ -4,8 +4,7 @@
         <text> 댓글 작성시간 : <span th:text="${comment.regDate}"></span></text><br>
         <text th:text="${comment.commentContent}"></text>
         <div th:if="${comment.memberId == userId}">
-            <input type="hidden" th:id="${comment.commentId}" name="commentId" th:value="${comment.commentId}">
-            <input type="button" class="btn btn-secondary" value="댓글 삭제" onclick="deleteComment()"><br>
+            <button class="btn btn-secondary" th:data-name="${comment.commentId}" th:onclick="deleteComment([[${comment.commentId}]])">댓글 삭제</button><br>
         </div>
     </div>
 </div>
