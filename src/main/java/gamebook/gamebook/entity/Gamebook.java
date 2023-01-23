@@ -29,13 +29,13 @@ public class Gamebook {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "gamebook")
+    @OneToMany(mappedBy = "gamebook", cascade = CascadeType.ALL)
     private List<Page> pages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "gamebook")
+    @OneToMany(mappedBy = "gamebook", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "gamebook")
+    @OneToMany(mappedBy = "gamebook", cascade = CascadeType.ALL)
     private List<Likey> likeys = new ArrayList<>();
 
     public void setMember(Member member) {

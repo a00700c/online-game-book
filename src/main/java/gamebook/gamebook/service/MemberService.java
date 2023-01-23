@@ -1,7 +1,11 @@
 package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.memberDto.*;
+import gamebook.gamebook.entity.Comment;
+import gamebook.gamebook.entity.Likey;
 import gamebook.gamebook.entity.Member;
+import gamebook.gamebook.repository.CommentRepository;
+import gamebook.gamebook.repository.LikeyRepository;
 import gamebook.gamebook.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,8 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final CommentRepository commentRepository;
+    private final LikeyRepository likeyRepository;
 
     public String join(MemberJoinRequestDto memberJoinRequestDto) {
         Member member = new Member();
@@ -83,6 +89,16 @@ public class MemberService {
 
     public void deleteMember(String id) {
         Member member = memberRepository.findById(id).get();
+        List<Comment> comments = member.getComments();
+        comments.forEach(o ->{
+            o.getGamebook().commentDown();
+            commentRepository.delete(o);
+        });
+        List<Likey> likeys = member.getLikeys();
+        likeys.forEach(l -> {
+            l.getGamebook().likeDown();
+            likeyRepository.delete(l);
+        });
         memberRepository.delete(member);
     }
 }

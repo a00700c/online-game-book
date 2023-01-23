@@ -1,9 +1,6 @@
 package gamebook.gamebook.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class Member {
     private String password;
     private String nickname;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Gamebook> gamebooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
