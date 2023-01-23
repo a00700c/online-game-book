@@ -1,5 +1,6 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.CommentInfoDto;
 import gamebook.gamebook.entity.Comment;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,8 +33,11 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<Comment> findByGamebook(Long gbNum) {
-        return commentRepository.findAllByGamebookGbNumOrderByRegDateAsc(gbNum);
+    public List<CommentInfoDto> findByGamebook(Long gbNum) {
+        List<Comment> comments = commentRepository.findAllByGamebookGbNumOrderByRegDateAsc(gbNum);
+        return comments.stream().map(o ->
+                        new CommentInfoDto(o.getId(), o.getCommentContent(), o.getRegDate(), o.getMember().getId(), o.getMember().getNickname()))
+                .collect(Collectors.toList());
     }
 
 

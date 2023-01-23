@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GamebookReturnDto {
+public class GamebookGbNumDto {
 
     private Long gbNum;
 }

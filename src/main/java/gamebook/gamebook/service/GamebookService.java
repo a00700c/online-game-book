@@ -1,10 +1,8 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookMyPageDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookReturnDto;
+import gamebook.gamebook.dto.gamebookDto.*;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
+import gamebook.gamebook.entity.Comment;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
 import gamebook.gamebook.repository.GamebookRepository;
@@ -26,7 +24,7 @@ public class GamebookService {
     private final MemberRepository memberRepository;
     private final GamebookRepository gamebookRepository;
 
-    public GamebookReturnDto makeNewGamebook(GamebookCreateDto gamebookCreateDto) {
+    public GamebookGbNumDto makeNewGamebook(GamebookCreateDto gamebookCreateDto) {
 
         Member member = memberRepository.findById(gamebookCreateDto.getMemberId()).get();
 
@@ -34,7 +32,7 @@ public class GamebookService {
         gamebook.initGamebook(gamebookCreateDto.getTitle(), gamebookCreateDto.getThumbnailPath());
 
         gamebookRepository.save(gamebook);
-        return new GamebookReturnDto(gamebook.getGbNum());
+        return new GamebookGbNumDto(gamebook.getGbNum());
     }
 
 
@@ -58,8 +56,12 @@ public class GamebookService {
 
 
     @Transactional(readOnly = true)
-    public Gamebook findByGbNum(Long gbNum) {
-        return gamebookRepository.findById(gbNum).get();
+    public GamebookMainPageDto findByGbNum(GamebookGbNumDto gamebookGbNumDto) {
+        Gamebook gamebook = gamebookRepository.findById(gamebookGbNumDto.getGbNum()).get();
+        return new GamebookMainPageDto(gamebook.getGbNum(), gamebook.getTitle(),
+                gamebook.getThumbnailPath(), gamebook.getLikeNum(), gamebook.getCommentNum(),
+                gamebook.getGbDate(), gamebook.getChDate(), gamebook.getIsPublic(),
+                gamebook.getMember().getNickname());
     }
 
     @Transactional(readOnly = true)

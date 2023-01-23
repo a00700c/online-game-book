@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <div th:object="${gamebookInfo}">
+        <img th:src="|/images/*{thumbnailPath}|" width="100" height="100">
+        <text>No.<span th:text="*{gbNum}"></span></text>
+        <text>게임 제목 : <span th:text="*{title}"></span></text>
+        <text>제작자 : <span th:text="*{makerNickname}"></span></text>
+        <text>제작일 : <span th:text="*{gbDate}"></span></text>
+        <text>최근 수정일 :
+            <span th:if="*{chDate == null}" th:text="*{gbDate}"></span>
+            <span th:if="*{chDate != null}" th:text="*{chDate}"></span>
+        </text>
+        <text>공개 설정 :
+            <span th:if="*{isPublic == 1}">공개 </span>
+            <span th:if="*{isPublic == 0}">비공개 </span>
+        </text>
+    </div>
+
+    <text>댓글 <span th:text="${gamebookInfo.commentNum}"></span> 개</text>
+    <text>좋아요 <span th:text="${gamebookInfo.likeNum}"></span> 개</text><br>
+    <div th:each="comment : ${commentInfo}">
+        <text th:text="${comment.memberNickname}"></text>
+        <text th:text="${comment.regDate}"></text>
+        <text th:text="${comment.commentContent}"></text>
+        <div th:if="${comment.commentId == userId}">
+            <input type="hidden" th:id="${comment.commentId}" name="commentId" th:value="${comment.commentId}">
+            <input type="button" id="commentDeleteButton" class="btn btn-secondary" value="댓글 삭제" onclick="deleteComment()"><br>
+        </div>
+    </div>
+    <form id="commentForm" role="form">
+        <input type="text" id="commentContent" name="commentContent" placeholder="댓글을 입력하세요">
+        <input type="hidden" id="commentUserId" name="commentUserId" th:value="${userId}">
+    </form>
+    <input type="button" id="commentInputButton" class="btn btn-primary" value="댓글 등록" onclick="inputComment()"><br>
+
+    <a class="btn btn-lg btn-primary" href="/play">플레이</a>
+    <br/>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
+
+</body>
+
+<script src="/js/mainPage.js" th:inline="javascript"></script>
+</html>

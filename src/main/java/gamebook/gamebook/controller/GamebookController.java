@@ -1,9 +1,14 @@
 package gamebook.gamebook.controller;
 
+import gamebook.gamebook.dto.CommentInfoDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookForm;
+import gamebook.gamebook.dto.gamebookDto.GamebookGbNumDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookMainPageDto;
 import gamebook.gamebook.dto.pageDto.*;
+import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.file.FileStore;
+import gamebook.gamebook.service.CommentService;
 import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;
 import gamebook.gamebook.web.SessionConst;
@@ -30,6 +35,7 @@ public class GamebookController {
 
     private final GamebookService gamebookService;
     private final PageService pageService;
+    private final CommentService commentService;
     private final FileStore fileStore;
 
     @GetMapping("/making/new")
@@ -114,6 +120,16 @@ public class GamebookController {
                 pageInfo.getNextF(), pageInfo.getNextS(), pageInfo.getNextT()));
         model.addAttribute("pageId", pageId);
         return "gamebook/newPageForm";
+    }
+
+    @GetMapping("/main-page/{gbNum}")
+    public String gamebookMainPage(@PathVariable Long gbNum, @SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
+        GamebookMainPageDto gamebookInfo = gamebookService.findByGbNum(new GamebookGbNumDto(gbNum));
+        List<CommentInfoDto> commentInfo = commentService.findByGamebook(gbNum);
+        model.addAttribute("userId", loginId);
+        model.addAttribute("gamebookInfo", gamebookInfo);
+        model.addAttribute("commentInfo", commentInfo);
+        return "gamebook/mainPage";
     }
 
 }
