@@ -5,7 +5,9 @@ import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
 import gamebook.gamebook.dto.memberDto.MemberChangeDto;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
 import gamebook.gamebook.dto.memberDto.MemberPasswordNicknameDto;
+import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.service.GamebookService;
+import gamebook.gamebook.service.LikeyService;
 import gamebook.gamebook.service.MemberService;
 import gamebook.gamebook.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ public class HomeController {
 
     private final GamebookService gamebookService;
     private final MemberService memberService;
+    private final LikeyService likeyService;
 
     @RequestMapping("/")
     public String home(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
@@ -77,6 +80,14 @@ public class HomeController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/my-page/like")
+    public String showMyLikeList(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
+        List<GamebookRankDto> likeList = likeyService.findUserLike(new MemberIdDto(loginId));
+        model.addAttribute("likeList", likeList);
+        return "myPage/myLikeList";
+    }
+
 
     @GetMapping("/my-page/my-make-list")
     public String showMyMakeList(@SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {

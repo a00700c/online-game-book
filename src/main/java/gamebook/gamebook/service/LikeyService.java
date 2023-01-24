@@ -2,6 +2,8 @@ package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.LikeMakeDto;
 import gamebook.gamebook.dto.LikeNumDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
+import gamebook.gamebook.dto.memberDto.MemberIdDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Likey;
 import gamebook.gamebook.entity.Member;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,11 +50,12 @@ public class LikeyService {
     }
 
     @Transactional(readOnly = true)
-    public List<Gamebook> findUserLike(String memberId) {
-        List<Likey> findLikeyList = likeyRepository.findAllByMemberIdOrderByIdDesc(memberId);
-        List<Gamebook> gamebookList = new ArrayList<>();
-        findLikeyList.forEach(s ->
-                gamebookList.add(s.getGamebook()));
-        return gamebookList;
+    public List<GamebookRankDto> findUserLike(MemberIdDto memberIdDto) {
+        List<Likey> findLikeyList = likeyRepository.findAllByMemberIdOrderByIdDesc(memberIdDto.getId());
+        return findLikeyList.stream()
+                .map(o -> new GamebookRankDto(o.getGamebook().getGbNum(), o.getGamebook().getTitle(),
+                        o.getGamebook().getThumbnailPath(), o.getGamebook().getLikeNum(),
+                        o.getMember().getNickname(), o.getGamebook().getCommentNum()))
+                .collect(Collectors.toList());
     }
 }
