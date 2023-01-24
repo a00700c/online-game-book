@@ -1,5 +1,6 @@
 package gamebook.gamebook.controller;
 
+import gamebook.gamebook.dto.LikeMakeDto;
 import gamebook.gamebook.dto.commentDto.CommentInfoDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookForm;
@@ -9,6 +10,7 @@ import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.CommentService;
 import gamebook.gamebook.service.GamebookService;
+import gamebook.gamebook.service.LikeyService;
 import gamebook.gamebook.service.PageService;
 import gamebook.gamebook.web.SessionConst;
 import jakarta.validation.Valid;
@@ -35,6 +37,7 @@ public class GamebookController {
     private final GamebookService gamebookService;
     private final PageService pageService;
     private final CommentService commentService;
+    private final LikeyService likeyService;
     private final FileStore fileStore;
 
     @GetMapping("/making/new")
@@ -125,6 +128,8 @@ public class GamebookController {
     public String gamebookMainPage(@PathVariable Long gbNum, @SessionAttribute(name = SessionConst.MEMBER_ID, required = false) String loginId, Model model) {
         GamebookMainPageDto gamebookInfo = gamebookService.findByGbNum(new GamebookGbNumDto(gbNum));
         List<CommentInfoDto> commentInfo = commentService.findByGamebook(gbNum);
+        boolean ifLike = likeyService.checkIfLike(new LikeMakeDto(loginId, gbNum));
+        model.addAttribute("ifLike", ifLike);
         model.addAttribute("userId", loginId);
         model.addAttribute("gamebookInfo", gamebookInfo);
         model.addAttribute("commentInfo", commentInfo);

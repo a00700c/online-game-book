@@ -46,6 +46,17 @@
     </form>
     <input type="button" id="commentInputButton" class="btn btn-primary" value="댓글 등록" onclick="inputComment()"><br>
 
+    <form id="likeForm" role="form">
+        <input type="hidden" name="gbNum" th:value="${gamebookInfo.gbNum}">
+    </form>
+    <div th:unless="${ifLike}">
+        <input type="button" id="likeButton" class="btn btn-primary" value="좋아요" onclick="doLike()"><br>
+    </div>
+    <div th:if="${ifLike}">
+        <input type="button" id="unLikeButton" class="btn btn-primary" value="좋아요 취소" onclick="doUnLike()"><br>
+    </div>
+
+
     <a class="btn btn-lg btn-primary" href="/play">플레이</a>
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
@@ -90,6 +101,46 @@
                 text = parseInt(text);
                 $("#commentCount").text(text + 1);
                 $("#commentContent").val('');
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function doLike() {
+        $.ajax({
+            type: "POST",
+            url: "/like",
+            data: $("#likeForm").serialize(),
+        })
+            .done(function (result) {
+                $("#likeCount").text(result.likeNum);
+                $("#likeButton").attr('value', '좋아요 취소');
+                $("#likeButton").attr('onclick', 'doUnLike()');
+                $("#likeButton").attr('id', 'unLikeButton');
+
+            })
+            .fail(function (jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function () {
+            })
+    }
+
+    function doUnLike() {
+        $.ajax({
+            type: "DELETE",
+            url: "/like",
+            data: $("#likeForm").serialize(),
+        })
+            .done(function (result) {
+                $("#likeCount").text(result.likeNum);
+                $("#unLikeButton").attr('value', '좋아요');
+                $("#unLikeButton").attr('onclick', 'doLike()');
+                $("#unLikeButton").attr('id', 'likeButton');
+
             })
             .fail(function (jqXHR) {
                 console.log(jqXHR);

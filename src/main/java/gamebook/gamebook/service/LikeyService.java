@@ -1,5 +1,7 @@
 package gamebook.gamebook.service;
 
+import gamebook.gamebook.dto.LikeMakeDto;
+import gamebook.gamebook.dto.LikeNumDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Likey;
 import gamebook.gamebook.entity.Member;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,19 +25,25 @@ public class LikeyService {
     private final GamebookRepository gamebookRepository;
     private final LikeyRepository likeyRepository;
 
-    public Long makeNewLikey(String memberId, Long gbNum) {
-        Member member = memberRepository.findById(memberId).get();
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+    public LikeNumDto makeNewLikey(LikeMakeDto likeMakeDto) {
+        Member member = memberRepository.findById(likeMakeDto.getMemberId()).get();
+        Gamebook gamebook = gamebookRepository.findById(likeMakeDto.getGbNum()).get();
         Likey likey = Likey.createLikey(member, gamebook);
         likeyRepository.save(likey);
-        return gamebook.likeUp();
+        return new LikeNumDto(gamebook.likeUp());
     }
 
-    public Long deleteLikey(String memberId, Long gbNum) {
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
-        Likey findLikey = likeyRepository.findByMemberIdAndGamebookGbNum(memberId, gbNum);
+    public LikeNumDto deleteLikey(LikeMakeDto likeMakeDto) {
+        Gamebook gamebook = gamebookRepository.findById(likeMakeDto.getGbNum()).get();
+        Likey findLikey = likeyRepository.findByMemberIdAndGamebookGbNum(likeMakeDto.getMemberId(), likeMakeDto.getGbNum()).get();
         likeyRepository.delete(findLikey);
-        return gamebook.likeDown();
+        return new LikeNumDto(gamebook.likeDown());
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkIfLike(LikeMakeDto likeMakeDto) {
+        Optional<Likey> findLike = likeyRepository.findByMemberIdAndGamebookGbNum(likeMakeDto.getMemberId(), likeMakeDto.getGbNum());
+        return findLike.isPresent();
     }
 
     @Transactional(readOnly = true)
