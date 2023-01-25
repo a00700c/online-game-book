@@ -2,6 +2,7 @@ package gamebook.gamebook.service;
 
 import gamebook.gamebook.dto.gamebookDto.*;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
+import gamebook.gamebook.dto.memberDto.MemberNicknameDto;
 import gamebook.gamebook.entity.Comment;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.entity.Member;
@@ -70,19 +71,30 @@ public class GamebookService {
     }
 
     @Transactional(readOnly = true)
-    public List<Gamebook> findByTitle(String title) {
-        List<Gamebook> findGamebooks = gamebookRepository.findAllByTitleOrderByGbNumDesc(title);
-        return findGamebooks;
+    public List<GamebookRankDto> findByTitle(GamebookTitleDto titleDto) {
+        List<Gamebook> findGamebooks = gamebookRepository.findAllByTitleOrderByGbNumDesc(titleDto.getTitle());
+        if (findGamebooks.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return findGamebooks.stream()
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<Gamebook> findByNickname(String nickname) {
-        Optional<Member> findMember = memberRepository.findOneByNickname(nickname);
+    public List<GamebookRankDto> findByNickname(MemberNicknameDto nicknameDto) {
+        Optional<Member> findMember = memberRepository.findOneByNickname(nicknameDto.getNickname());
         if (findMember.isEmpty()) {
             return new ArrayList<>();
         }
         String id = findMember.get().getId();
-        return gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
+        List<Gamebook> findGamebooks = gamebookRepository.findAllByMemberIdOrderByGbNumDesc(id);
+        if (findGamebooks.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return findGamebooks.stream()
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

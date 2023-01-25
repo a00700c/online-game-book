@@ -3,8 +3,10 @@ package gamebook.gamebook.controller;
 import gamebook.gamebook.dto.gamebookDto.GamebookMyPageDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookSearchDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookTitleDto;
 import gamebook.gamebook.dto.memberDto.MemberChangeDto;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
+import gamebook.gamebook.dto.memberDto.MemberNicknameDto;
 import gamebook.gamebook.dto.memberDto.MemberPasswordNicknameDto;
 import gamebook.gamebook.entity.Gamebook;
 import gamebook.gamebook.service.GamebookService;
@@ -51,11 +53,12 @@ public class HomeController {
     @GetMapping("/search-result")
     public String searchResultPage(@RequestParam("searchName") String searchName, @RequestParam("searchType") String searchType, Model model) {
         if (searchType.equals("makerName")) {
-            gamebookService.findByNickname(searchName);
+            List<GamebookRankDto> findGamebooks = gamebookService.findByNickname(new MemberNicknameDto(searchName));
+            model.addAttribute("findResult", findGamebooks);
         } else if (searchType.equals("gbName")) {
-            gamebookService.findByTitle(searchName);
+            List<GamebookRankDto> findGamebooks = gamebookService.findByTitle(new GamebookTitleDto(searchName));
+            model.addAttribute("findResult", findGamebooks);
         }
-
         model.addAttribute("searchForm", new GamebookSearchDto());
         return "searchResult";
     }
