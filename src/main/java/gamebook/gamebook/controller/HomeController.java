@@ -2,6 +2,7 @@ package gamebook.gamebook.controller;
 
 import gamebook.gamebook.dto.gamebookDto.GamebookMyPageDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
+import gamebook.gamebook.dto.gamebookDto.GamebookSearchDto;
 import gamebook.gamebook.dto.memberDto.MemberChangeDto;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
 import gamebook.gamebook.dto.memberDto.MemberPasswordNicknameDto;
@@ -39,6 +40,24 @@ public class HomeController {
         model.addAttribute("loginId", loginId);
         return "loginHome";
 
+    }
+
+    @GetMapping("/search-page")
+    public String searchPage(Model model) {
+        model.addAttribute("searchForm", new GamebookSearchDto());
+        return "searchPage";
+    }
+
+    @GetMapping("/search-result")
+    public String searchResultPage(@RequestParam("searchName") String searchName, @RequestParam("searchType") String searchType, Model model) {
+        if (searchType.equals("makerName")) {
+            gamebookService.findByNickname(searchName);
+        } else if (searchType.equals("gbName")) {
+            gamebookService.findByTitle(searchName);
+        }
+
+        model.addAttribute("searchForm", new GamebookSearchDto());
+        return "searchResult";
     }
 
     @GetMapping("/ranking")

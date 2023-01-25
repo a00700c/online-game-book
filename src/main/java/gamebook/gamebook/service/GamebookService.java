@@ -71,7 +71,8 @@ public class GamebookService {
 
     @Transactional(readOnly = true)
     public List<Gamebook> findByTitle(String title) {
-        return gamebookRepository.findAllByTitleOrderByGbNumDesc(title);
+        List<Gamebook> findGamebooks = gamebookRepository.findAllByTitleOrderByGbNumDesc(title);
+        return findGamebooks;
     }
 
     @Transactional(readOnly = true)
