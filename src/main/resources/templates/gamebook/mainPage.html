@@ -57,7 +57,7 @@
     </div>
 
 
-    <a class="btn btn-lg btn-primary" href="/play">플레이</a>
+    <a class="btn btn-lg btn-primary" th:href="@{/first-page/{gbNum}(gbNum=${gamebookInfo.gbNum})}">플레이</a>
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->

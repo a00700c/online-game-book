@@ -136,4 +136,42 @@ public class GamebookController {
         return "gamebook/mainPage";
     }
 
+    @GetMapping("/first-page/{gbNum}")
+    public String firstPage(@PathVariable Long gbNum, RedirectAttributes redirectAttributes) {
+        PageIdDto findId = pageService.findFirstPage(new PageNumGbNumDto(gbNum, 1L));
+        redirectAttributes.addAttribute("gbNum", gbNum);
+        if (findId == null) {
+            return "redirect:/main-page/{gbNum}";
+        }
+        redirectAttributes.addAttribute("pageId", findId.getPageId());
+        return "redirect:/play/{gbNum}/{pageId}";
+    }
+
+    @GetMapping("/play/{gbNum}/{pageId}")
+    public String gamebookPlay(@PathVariable Long gbNum, @PathVariable Long pageId, Model model) {
+        PageInfoDto pageInfo = pageService.findPageInfo(new PageIdDto(pageId));
+        if (pageInfo.getNextF() != null && pageInfo.getNextF() != 0) {
+            PageNumDto firstNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextF()));
+            Long nextFNum = firstNumDto.getPageNum();
+            model.addAttribute("nextFNum", nextFNum);
+        }
+        if (pageInfo.getNextS() != null && pageInfo.getNextS() != 0) {
+            PageNumDto secondNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextS()));
+            Long nextSNum = secondNumDto.getPageNum();
+            model.addAttribute("nextSNum", nextSNum);
+        }
+        if (pageInfo.getNextT() != null && pageInfo.getNextT() != 0) {
+            PageNumDto thirdNumDto = pageService.findPageNum(new PageIdDto(pageInfo.getNextT()));
+            Long nextTNum = thirdNumDto.getPageNum();
+            model.addAttribute("nextTNum", nextTNum);
+        }
+        Long pageNum = pageService.findPageNum(new PageIdDto(pageId)).getPageNum();
+        model.addAttribute("pageForm", new newPageForm(pageInfo.getContent(), pageInfo.getPicPath(),
+                pageNum, pageInfo.getFirstContent(), pageInfo.getSecondContent(), pageInfo.getThirdContent(),
+                pageInfo.getNextF(), pageInfo.getNextS(), pageInfo.getNextT()));
+        model.addAttribute("pageId", pageId);
+        model.addAttribute("gbNum", gbNum);
+            return "gamebook/playPage";
+    }
+
 }

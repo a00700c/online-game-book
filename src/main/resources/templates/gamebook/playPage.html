@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+    <div th:object="${pageForm}">
+        <div class="border">
+            <img id="pagePic" th:src="|/images/${pageForm.picPath}|" width="100" height="100"><br>
+            <text th:text="*{content}"></text><br><br>
+        </div>
+        <br/>
+
+        <div th:if="*{nextF != null}">
+            <div class="border">
+                <text th:text="*{firstContent}">...</text><br>
+                <div th:if="*{nextF == 0}">
+                    <a class="btn btn-primary" th:href="@{/main-page/{gbNum}(gbNum=${gbNum})}">메인 페이지로</a>
+                </div>
+                <div th:if="*{nextF != 0}">
+                    <a class="btn btn-primary" th:text="|${nextFNum} 페이지로|" th:href="@{/play/{gbNum}/{nextF}(gbNum=${gbNum},nextF=*{nextF})}"></a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="*{nextS != null}">
+            <div class="border">
+                <text th:text="*{secondContent}">...</text><br>
+                <div th:if="*{nextS == 0}">
+                    <a class="btn btn-primary" th:href="@{/main-page/{gbNum}(gbNum=${gbNum})}">메인 페이지로</a>
+                </div>
+                <div th:if="*{nextS != 0}">
+                    <a class="btn btn-primary" th:text="|${nextSNum} 페이지로|" th:href="@{/play/{gbNum}/{nextS}(gbNum=${gbNum},nextS=*{nextS})}"></a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="*{nextT != null}">
+            <div class="border">
+                <text th:text="*{thirdContent}">...</text><br>
+                <div th:if="*{nextT == 0}">
+                    <a class="btn btn-primary" th:href="@{/main-page/{gbNum}(gbNum=${gbNum})}">메인 페이지로</a>
+                </div>
+                <div th:if="*{nextT != 0}">
+                    <a class="btn btn-primary" th:text="|${nextTNum} 페이지로|" th:href="@{/play/{gbNum}/{nextT}(gbNum=${gbNum},nextT=*{nextT})}"></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
+
+</body>
+
+</html>

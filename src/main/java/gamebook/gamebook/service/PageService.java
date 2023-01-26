@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,15 @@ public class PageService {
 
         pageRepository.save(page);
         return new newPageReturnDto(page.getPageId(), pageNum);
+    }
+
+    @Transactional(readOnly = true)
+    public PageIdDto findFirstPage(PageNumGbNumDto dto) {
+        Optional<Page> findPage = pageRepository.findPageByGamebookGbNumAndPageNum(dto.getGbNum(), dto.getPageNum());
+        if (findPage.isPresent()) {
+            return new PageIdDto(findPage.get().getPageId());
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
