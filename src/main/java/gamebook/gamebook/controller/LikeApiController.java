@@ -1,7 +1,7 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.LikeMakeDto;
-import gamebook.gamebook.dto.LikeNumDto;
+import gamebook.gamebook.dto.likeDto.LikeMakeDto;
+import gamebook.gamebook.dto.likeDto.LikeNumDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookGbNumDto;
 import gamebook.gamebook.service.LikeyService;
 import gamebook.gamebook.web.SessionConst;

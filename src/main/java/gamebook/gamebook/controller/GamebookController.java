@@ -1,6 +1,6 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.LikeMakeDto;
+import gamebook.gamebook.dto.likeDto.LikeMakeDto;
 import gamebook.gamebook.dto.commentDto.CommentInfoDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookForm;

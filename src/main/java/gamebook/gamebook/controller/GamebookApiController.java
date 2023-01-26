@@ -1,6 +1,10 @@
 package gamebook.gamebook.controller;
 
-import gamebook.gamebook.dto.*;
+import gamebook.gamebook.dto.choiceDto.FirstChoiceRequestDto;
+import gamebook.gamebook.dto.choiceDto.SecondChoiceRequestDto;
+import gamebook.gamebook.dto.choiceDto.ThirdChoiceRequestDto;
+import gamebook.gamebook.dto.etcDto.ConResponseDto;
+import gamebook.gamebook.dto.etcDto.PicResponseDto;
 import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.PageService;

@@ -1,7 +1,7 @@
 package gamebook.gamebook.service;
 
-import gamebook.gamebook.dto.LikeMakeDto;
-import gamebook.gamebook.dto.LikeNumDto;
+import gamebook.gamebook.dto.likeDto.LikeMakeDto;
+import gamebook.gamebook.dto.likeDto.LikeNumDto;
 import gamebook.gamebook.dto.gamebookDto.GamebookRankDto;
 import gamebook.gamebook.dto.memberDto.MemberIdDto;
 import gamebook.gamebook.entity.Gamebook;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

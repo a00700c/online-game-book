@@ -1,4 +1,4 @@
-package gamebook.gamebook.dto;
+package gamebook.gamebook.dto.choiceDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
