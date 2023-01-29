@@ -93,7 +93,7 @@ public class GamebookService {
             return new ArrayList<>();
         }
         return findGamebooks.stream()
-                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), nicknameDto.getNickname(), o.getCommentNum()))
                 .collect(Collectors.toList());
     }
 
