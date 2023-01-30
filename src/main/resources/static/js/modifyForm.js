@@ -43,3 +43,20 @@ function saveTitle() {
         .always(function () {
         })
 }
+
+function changePublicStatus() {
+    $.ajax({
+        type: "PATCH",
+        url: "/gamebook/public",
+        data: $("#gbNumForm").serialize(),
+    })
+        .done(function (result) {
+            document.location.reload();
+
+        })
+        .fail(function (jqXHR) {
+            console.log(jqXHR);
+        })
+        .always(function () {
+        })
+}

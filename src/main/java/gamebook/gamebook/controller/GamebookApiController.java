@@ -78,6 +78,17 @@ public class GamebookApiController {
         return new GamebookTitleDto(request.getTitle());
     }
 
+    @PatchMapping("/gamebook/public")
+    public Boolean changePublic(GamebookChangePublicDto request) {
+        if (request.getIsPublic() == 0L) {
+            gamebookService.changeToPublic(new GamebookGbNumDto(request.getGbNum()));
+            return true;
+        } else {
+            gamebookService.changeToPrivate(new GamebookGbNumDto(request.getGbNum()));
+            return false;
+        }
+    }
+
     @PostMapping("/page/update-first-choice")
     public PageChoiceResponseDto saveFirstChoice(FirstChoiceRequestDto request) {
         if (request.getNextF() == -1) {

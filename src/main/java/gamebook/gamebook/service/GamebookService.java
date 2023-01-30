@@ -38,13 +38,13 @@ public class GamebookService {
 
 
 
-    public void changeToPublic(Long gbNum) {
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+    public void changeToPublic(GamebookGbNumDto dto) {
+        Gamebook gamebook = gamebookRepository.findById(dto.getGbNum()).get();
         gamebook.changeToPublic();
     }
 
-    public void changeToPrivate(Long gbNum) {
-        Gamebook gamebook = gamebookRepository.findById(gbNum).get();
+    public void changeToPrivate(GamebookGbNumDto dto) {
+        Gamebook gamebook = gamebookRepository.findById(dto.getGbNum()).get();
         gamebook.changeToPrivate();
     }
 
