@@ -5,8 +5,10 @@ import gamebook.gamebook.dto.choiceDto.SecondChoiceRequestDto;
 import gamebook.gamebook.dto.choiceDto.ThirdChoiceRequestDto;
 import gamebook.gamebook.dto.etcDto.ConResponseDto;
 import gamebook.gamebook.dto.etcDto.PicResponseDto;
+import gamebook.gamebook.dto.gamebookDto.*;
 import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.file.FileStore;
+import gamebook.gamebook.service.GamebookService;
 import gamebook.gamebook.service.PageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ public class GamebookApiController {
     @Value("${file.dir}")
     private String fileDir;
 
+    private final GamebookService gamebookService;
     private final PageService pageService;
     private final FileStore fileStore;
 
@@ -51,6 +54,28 @@ public class GamebookApiController {
     public ConResponseDto saveCon(PageConUpdateRequestDto request) throws IOException {
         pageService.updateContent(new PageConDto(request.getPageId(), request.getContent()));
         return new ConResponseDto(request.getContent());
+    }
+
+
+    @PatchMapping("/gamebook/thumbnail")
+    public PicResponseDto updateThumbnail(GamebookThumbnailRequestDto request) throws IOException {
+        GamebookMainPageDto gbInfo = gamebookService.findByGbNum(new GamebookGbNumDto(request.getGbNum()));
+        MultipartFile file = request.getFile();
+        String filePath = fileStore.storeFile(file);
+        if (filePath == null) {
+            return null;
+        }
+        if (gbInfo.getThumbnailPath() != null) {
+            fileStore.deleteFile(gbInfo.getThumbnailPath());
+        }
+        gamebookService.updateThumbnail(new GamebookGbNumPathDto(request.getGbNum(), filePath));
+        return new PicResponseDto(filePath);
+    }
+
+    @PatchMapping("/gamebook/title")
+    public GamebookTitleDto updateTitle(GamebookGbNumTitleDto request) {
+        gamebookService.updateTitle(request);
+        return new GamebookTitleDto(request.getTitle());
     }
 
     @PostMapping("/page/update-first-choice")

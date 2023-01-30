@@ -55,6 +55,18 @@ public class GamebookService {
         gamebook.changeDate();
     }
 
+    public void updateThumbnail(GamebookGbNumPathDto dto) {
+        Gamebook gamebook = gamebookRepository.findById(dto.getGbNum()).get();
+        gamebook.changeThumbnailPath(dto.getThumbnailPath());
+        gamebook.changeDate();
+    }
+
+    public void updateTitle(GamebookGbNumTitleDto dto) {
+        Gamebook gamebook = gamebookRepository.findById(dto.getGbNum()).get();
+        gamebook.changeTitle(dto.getTitle());
+        gamebook.changeDate();
+    }
+
 
     @Transactional(readOnly = true)
     public GamebookMainPageDto findByGbNum(GamebookGbNumDto gamebookGbNumDto) {

@@ -1,11 +1,8 @@
 package gamebook.gamebook.controller;
 
+import gamebook.gamebook.dto.gamebookDto.*;
 import gamebook.gamebook.dto.likeDto.LikeMakeDto;
 import gamebook.gamebook.dto.commentDto.CommentInfoDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookCreateDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookForm;
-import gamebook.gamebook.dto.gamebookDto.GamebookGbNumDto;
-import gamebook.gamebook.dto.gamebookDto.GamebookMainPageDto;
 import gamebook.gamebook.dto.pageDto.*;
 import gamebook.gamebook.file.FileStore;
 import gamebook.gamebook.service.CommentService;
@@ -19,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -64,6 +58,15 @@ public class GamebookController {
 
         return "redirect:/{gbNum}/list";
 
+    }
+
+    @GetMapping("/modify-gb/{gbNum}")
+    public String modifyGamebook(@PathVariable Long gbNum, Model model) {
+        GamebookMainPageDto gbDto = gamebookService.findByGbNum(new GamebookGbNumDto(gbNum));
+
+        model.addAttribute("modifyForm", new GamebookModifyForm(gbDto.getTitle(), gbDto.getThumbnailPath(), gbDto.getIsPublic()));
+        model.addAttribute("gbNum", gbNum);
+        return "gamebook/modifyForm";
     }
 
     @GetMapping("/{gbNum}/list")
