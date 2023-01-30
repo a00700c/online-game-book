@@ -12,14 +12,16 @@
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
 
     <div th:each="find : ${findGamebooks}">
-        <a th:href="@{/main-page/{gbNum}(gbNum=${find.gbNum})}">
-            <img th:src="|/images/${find.thumbnailPath}|" width="100" height="100">
-            <text>No.<span th:text="${find.gbNum}"></span></text>
-            <text>게임 제목 : <span th:text="${find.title}"></span></text>
-            <text>게임 제작자 : <span th:text="${find.nickname}"></span></text>
-            <text>댓글 <span th:text="${find.commentCount}"></span> 개</text>
-            <text>좋아요 <span th:text="${find.likeNum}"></span> 개</text>
-        </a>
+        <div th:if="${find.isPublic == 1}">
+            <a th:href="@{/main-page/{gbNum}(gbNum=${find.gbNum})}">
+                <img th:src="|/images/${find.thumbnailPath}|" width="100" height="100">
+                <text>No.<span th:text="${find.gbNum}"></span></text>
+                <text>게임 제목 : <span th:text="${find.title}"></span></text>
+                <text>게임 제작자 : <span th:text="${find.nickname}"></span></text>
+                <text>댓글 <span th:text="${find.commentCount}"></span> 개</text>
+                <text>좋아요 <span th:text="${find.likeNum}"></span> 개</text>
+            </a>
+        </div>
     </div>
     <a class="btn btn-lg btn-primary" href="/">메인 화면</a>
     <br/>

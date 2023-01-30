@@ -54,7 +54,7 @@ public class LikeyService {
         return findLikeyList.stream()
                 .map(o -> new GamebookRankDto(o.getGamebook().getGbNum(), o.getGamebook().getTitle(),
                         o.getGamebook().getThumbnailPath(), o.getGamebook().getLikeNum(),
-                        o.getMember().getNickname(), o.getGamebook().getCommentNum()))
+                        o.getMember().getNickname(), o.getGamebook().getCommentNum(), o.getGamebook().getIsPublic()))
                 .collect(Collectors.toList());
     }
 }

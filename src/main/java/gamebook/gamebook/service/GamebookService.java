@@ -89,7 +89,7 @@ public class GamebookService {
             return new ArrayList<>();
         }
         return findGamebooks.stream()
-                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum(), o.getIsPublic()))
                 .collect(Collectors.toList());
     }
 
@@ -105,7 +105,7 @@ public class GamebookService {
             return new ArrayList<>();
         }
         return findGamebooks.stream()
-                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), nicknameDto.getNickname(), o.getCommentNum()))
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), nicknameDto.getNickname(), o.getCommentNum(), o.getIsPublic()))
                 .collect(Collectors.toList());
     }
 
@@ -121,7 +121,7 @@ public class GamebookService {
     public List<GamebookRankDto> rankAllFind() {
         List<Gamebook> findGamebooks = gamebookRepository.findAllByOrderByLikeNumDesc();
         return findGamebooks.stream()
-                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum()))
+                .map(o -> new GamebookRankDto(o.getGbNum(), o.getTitle(), o.getThumbnailPath(), o.getLikeNum(), o.getMember().getNickname(), o.getCommentNum(), o.getIsPublic()))
                 .collect(Collectors.toList());
     }
 }

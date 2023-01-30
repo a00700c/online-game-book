@@ -15,4 +15,5 @@ public class GamebookRankDto {
     private Long likeNum;
     private String nickname;
     private Long commentCount;
+    private Long isPublic;
 }
